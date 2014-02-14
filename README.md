@@ -19,10 +19,27 @@ The personal blog site hosted by github page.
  - Design site 
 
 ```
+dindinw.io
+└─site
+    ├─blog
+    ├─css
+    ├─doc
+    └─js
 ```
 
+```
+dindinw.io/
+`-- site
+    |-- blog
+    |-- css
+    |-- doc
+    `-- js
+```
 ## Tasks
 
-### Task1
+### Task1 Create Site structure
 
+```bash
+for d in blog doc js css ; do p=site/$d ; mkdir -p $p ; touch $p/.gitignore ; done
+```
 ### Task2
