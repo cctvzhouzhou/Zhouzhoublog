@@ -76,6 +76,7 @@ repl:shell can open a os shell
 
 [repl]: https://github.com/wuub/SublimeREPL/
 
+
 #### Build JavaScript code
 
 Go to "Tools > Build System > New Build System" , add code like:
@@ -89,11 +90,27 @@ Go to "Tools > Build System > New Build System" , add code like:
 
 After that, we can use `ctrl-B` to build javascript.
 
+#### Node.js binding
+
+[node-snippets]:https://github.com/zenorocha/sublime-snippets-js/
+
+[sublimetext-nodejs]:https://github.com/tanepiper/SublimeText-Nodejs
+
 #### Test Javascript Code
+
+NOTE: don't forget to set the environment variable `NODE_PATH`. 
+
+```shell
+# For Windows
+set NODE_PATH=%USERPROFILE%\AppData\Roaming\npm\node_modules
+```
 
 ##### NodeUnit
 install : `npm i nodeunit -g`
 
-[nodeunit]:https://github.com/caolan/nodeunit
+[nodeunit]: https://github.com/caolan/nodeunit
 
+##### Mocha
+install : `npm install -g mocha`
 
+[mocha]: https://github.com/visionmedia/mocha
