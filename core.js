@@ -152,21 +152,41 @@ echo(format("The obj1 == obj3 is %s",obj1==obj3));
 echo(format("The obj1 === obj3 is %s",obj1===obj3));
 
 echo ("===============================================")
-echo ("-------------- Tests for Build-in ----")
+echo ("-------------- Tests for Build-in -------------")
 echo ("===============================================")
-echo (typeof undefined);
-echo (typeof {});
-var f = function foo() {};
-echo (typeof f);
+echo (" typeof only have 5 kinds of return : ")
+echo ("     undefined, boolean, number, string, funtion, object")
+test_buildin("undefined",undefined);
+test_buildin("0", 0);
+test_buildin("a",'a');
+test_buildin("A","A");
+test_buildin("hello",'hello'); 
+test_buildin("true",true);
+test_buildin("false",false);
+test_buildin("null",null); //object
+test_buildin("{}",{});
+test_buildin("function foo() {}",function foo() {});
 var a = [1,2,3];
-echo (typeof a);
+test_buildin("[1,2,3]",a);
 inspect("a",a);
-echo(a.length);
+inspect("a.length",a.length);
 var point = [
    { x : 0, y : 1},
    { x : 1, y : 0}
 ]
 inspect("point",point);
+inspect("point[0]",point[0]);
+inspect("point[0].length",point[0].length);
+inspect("[point[1]].length",[point[1]].length); // the length properties is only for array object!
+
+echo(typeof Object) // Object is a function
+echo(typeof Object.prototype); //Object.prototype is a object
+echo(Object.prototype.toString.call(a)); // a is a array
+echo(Array.isArray(a)) //true
+ 
+function test_buildin(name,variable) {
+	echo(format("%s is %s",name, typeof variable));
+}
 
 function inspect(name,variable) {
 	if (typeof name != 'string') {

@@ -75,11 +75,20 @@ defaults write com.sublimetext.3 ApplePressAndHoldEnabled -bool false
 
 #### Install Package Installer
 
+Download from [wbond site][pkgctr]
+
+[pkgctr]:https://sublime.wbond.net/installation
+
 #### Install Md extend syntax highlight
+
+- Install : `CMD-P` -> enter `pkgctri` -> enter `markdownextend`
+
+- Make it default : `View -> Syntax -> Open all with current extension as... -> Markdown Extended`
 
 #### Install Md proview 
 
-`Ctrl-P` (Windows/Linux) or `CMD-P` (Mac) -> enter `prewb`
+- Install : `CMD-P` -> enter `pkgctri` -> enter `markdownpreview`
+- Usage : `Ctrl-P` (Windows/Linux) or `CMD-P` (Mac) -> enter `prewb`
 
 #### Console 
 
@@ -99,6 +108,9 @@ Sometimes, you may want a os terminal inside your working folder, here a plugin 
 
 
 #### SublimeREPL
+
+- Install : `CMD-P` -> `pkgctrlin` -> 'sublimerepl' (need to restart )
+
 repl:shell can open a os shell  
 
 [repl]: https://github.com/wuub/SublimeREPL/
