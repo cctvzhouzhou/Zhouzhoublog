@@ -151,6 +151,23 @@ echo(format("The obj1 == obj2 is %s",obj1==obj2));
 echo(format("The obj1 == obj3 is %s",obj1==obj3));
 echo(format("The obj1 === obj3 is %s",obj1===obj3));
 
+echo ("===============================================")
+echo ("-------------- Tests for Build-in ----")
+echo ("===============================================")
+echo (typeof undefined);
+echo (typeof {});
+var f = function foo() {};
+echo (typeof f);
+var a = [1,2,3];
+echo (typeof a);
+inspect("a",a);
+echo(a.length);
+var point = [
+   { x : 0, y : 1},
+   { x : 1, y : 0}
+]
+inspect("point",point);
+
 function inspect(name,variable) {
 	if (typeof name != 'string') {
 		assert.fail(name,undefined,format("call inspect(name,variable) error, 'name' is '%s' and 'variable' is '%s'",name,variable))
