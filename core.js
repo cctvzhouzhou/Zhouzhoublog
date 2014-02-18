@@ -334,7 +334,15 @@ echo ("===============================================")
 assert.true("  \"\"===''  ", ""==='');
 assert.true('  String() === ""', String() === '');
 assert.true("  String(true) === 'true' (string!)", String(true) === 'true');
-
+var str = "foobar"
+assert.true("'foobar'.indexOf('') return 0", str.indexOf('') === 0);
+assert.true("'foobar'.indexOf('foo') return 0", str.indexOf('foo') === 0);
+assert.true("~'foobar'.indexOf('foo') return -1", ~str.indexOf('foo') === -1);
+assert.true("~'foobar'.indexOf('b') return -4", ~str.indexOf('b') === -4);
+assert.true("~'foobar'.indexOf('alex') return 0", ~str.indexOf('alex') === 0);
+assert.true("~'foobar'.indexOf('wu') return 0", ~str.indexOf('wu') === 0); 
+echo("if (str.indexOf('foo') > = 0) { //found } ");
+echo("if (~str.indexOf('foo')) { //found} }");
 
 echo ("===============================================")
 echo ("---- Tests for Wrapper type : Boolean       ---")
@@ -405,27 +413,6 @@ assert.true(" -0 === 0 ", -0 === 0);
 echo ("===============================================")
 echo ("---- Tests for bitwise flag       ----")
 echo ("===============================================")
-var FLAG_A = 1; // 0001
-var FLAG_B = 2; // 0010
-var FLAG_C = 4; // 0100
-var FLAG_D = 8; // 1000
-echo(FLAG_A|FLAG_B);
-echo(FLAG_A|FLAG_B|FLAG_C);
-echo(FLAG_A|FLAG_B|FLAG_C|FLAG_D); 
-
-var str = "foobar"
-echo(str.indexOf('foo'));
-echo(~str.indexOf('foo'));
-echo(str.indexOf('b'));
-echo(~str.indexOf('b'));
-echo(~str.indexOf('alex'));
-echo(~str.indexOf('wu'));
-echo(Boolean(-1));
-echo(Boolean(0));
-echo(1>-1);
-echo(0>-1);
-echo(-0>-1);
-echo(format("%b",FLAG_D))
 
 assert.true("314" , toBase2String(314) === '00000000000000000000000100111010');
 assert.true("~314",toBase2String(~314) === '11111111111111111111111011000101');
@@ -433,6 +420,21 @@ assert.true("0"   ,   toBase2String(0) === '00000000000000000000000000000000');
 assert.true("-1",    toBase2String(-1) === '11111111111111111111111111111111');
 assert.true("-2147483648", toBase2String(-2147483648) === '10000000000000000000000000000000');
 assert.true( "2147483647",  toBase2String(2147483647) === '01111111111111111111111111111111');
+
+var FLAG_A = 1; // 0001
+var FLAG_B = 2; // 0010
+var FLAG_C = 4; // 0100
+var FLAG_D = 8; // 1000
+echo("FLAG_A = 1 => " + toBase2String(FLAG_A));
+echo("FLAG_B = 2 => " + toBase2String(FLAG_B));
+echo("FLAG_C = 4 => " + toBase2String(FLAG_C));
+echo("FLAG_D = 8 => " + toBase2String(FLAG_D));
+echo("FLAG_A|FLAG_B               => " + (FLAG_A|FLAG_B) + " =>  " + toBase2String(FLAG_A|FLAG_B));
+echo("FLAG_A|FLAG_C               => " + (FLAG_A|FLAG_C) + " =>  " + toBase2String(FLAG_A|FLAG_C));
+echo("FLAG_A|FLAG_B|FLAG_C        => " + (FLAG_A|FLAG_B|FLAG_C) 
+	+ " =>  " + toBase2String(FLAG_A|FLAG_B|FLAG_C));
+echo("FLAG_A|FLAG_B|FLAG_C|FLAG_D => " + (FLAG_A|FLAG_B|FLAG_C|FLAG_D) 
+	+ " => " + toBase2String(FLAG_A|FLAG_B|FLAG_C|FLAG_D));
 
 
 function toBase2String(number,length){
