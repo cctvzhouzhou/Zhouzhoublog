@@ -183,6 +183,11 @@ echo(typeof Object) // Object is a function
 echo(typeof Object.prototype); //Object.prototype is a object
 echo(Object.prototype.toString.call(a)); // a is a array
 echo(Array.isArray(a)) //true
+
+// null is a object is a bug for history issue, see 
+// http://www.2ality.com/2013/10/typeof-null.html
+// http://www.2ality.com/2013/01/categorizing-values.html
+// They are two types in javascript, primative and object
  
 function test_buildin(name,variable) {
 	echo(format("%s is %s",name, typeof variable));
