@@ -411,22 +411,25 @@ assert.true("-Infinity === -1/0", -Infinity === -1/0);
 assert.true(" -0 === 0 ", -0 === 0);
 
 echo ("===============================================")
-echo ("---- Tests for bitwise flag       ----")
+echo ("---- Tests for bitwise flag                ----")
 echo ("===============================================")
 
-assert.true("314" , toBase2String(314) === '00000000000000000000000100111010');
-assert.true("~314",toBase2String(~314) === '11111111111111111111111011000101');
-assert.true("0"   ,   toBase2String(0) === '00000000000000000000000000000000');
-assert.true("-1",    toBase2String(-1) === '11111111111111111111111111111111');
-assert.true("-2147483648", toBase2String(-2147483648) === '10000000000000000000000000000000');
-assert.true( "2147483647",  toBase2String(2147483647) === '01111111111111111111111111111111');
+assert.true(" 314 => 00000000000000000000000100111010" , toBase2String(314) === '00000000000000000000000100111010');
+assert.true("~314 => 11111111111111111111111011000101",toBase2String(~314) === '11111111111111111111111011000101');
+assert.true(" 0 => 00000000000000000000000000000000"   ,   toBase2String(0) === '00000000000000000000000000000000');
+assert.true("-1 => 11111111111111111111111111111111",    toBase2String(-1) === '11111111111111111111111111111111');
+assert.true("-2147483648 => 10000000000000000000000000000000", toBase2String(-2147483648) === '10000000000000000000000000000000');
+assert.true(" 2147483647 => 01111111111111111111111111111111",  toBase2String(2147483647) === '01111111111111111111111111111111');
 echo("Bitwise AND '&' : means 1 only if both are 1");
 echo("Bitwise OR  '|' : means 1 either is 1");
-assert.true( "   9 => 00000000000000000000000000001001",    toBase2String(9) === '00000000000000000000000000001001');
-assert.true( "  14 => 00000000000000000000000000001110",   toBase2String(14) === '00000000000000000000000000001110');
-assert.true( "9&14 => 00000000000000000000000000001000", toBase2String(9&14) === '00000000000000000000000000001000');
-assert.true( "9|14 => 00000000000000000000000000001111", toBase2String(9|14) === '00000000000000000000000000001111');
-
+echo("Bitwise XOR '^' : means 1 only if they are different");
+echo("Bitwise NOT '~'' : means inverted value");
+assert.true("   9 => 00000000000000000000000000001001",    toBase2String(9) === '00000000000000000000000000001001');
+assert.true("  14 => 00000000000000000000000000001110",   toBase2String(14) === '00000000000000000000000000001110');
+assert.true("9&14 => 00000000000000000000000000001000", toBase2String(9&14) === '00000000000000000000000000001000');
+assert.true("9|14 => 00000000000000000000000000001111", toBase2String(9|14) === '00000000000000000000000000001111');
+assert.true("9^14 => 00000000000000000000000000000111", toBase2String(9^14) === '00000000000000000000000000000111');
+assert.true("  ~9 => 00000000000000000000000000000110",   toBase2String(~9) === '0110');
 var FLAG_A = 1; // 0001
 var FLAG_B = 2; // 0010
 var FLAG_C = 4; // 0100
@@ -441,6 +444,8 @@ echo("FLAG_A|FLAG_B|FLAG_C        => " + (FLAG_A|FLAG_B|FLAG_C)
 	+ " =>  " + toBase2String(FLAG_A|FLAG_B|FLAG_C));
 echo("FLAG_A|FLAG_B|FLAG_C|FLAG_D => " + (FLAG_A|FLAG_B|FLAG_C|FLAG_D) 
 	+ " => " + toBase2String(FLAG_A|FLAG_B|FLAG_C|FLAG_D));
+echo((FLAG_A|FLAG_B) === (FLAG_B|FLAG_A));
+echo((((FLAG_A|FLAG_B)|(FLAG_A|FLAG_B|FLAG_C))) === (FLAG_A|FLAG_B|FLAG_C));
 
 
 function toBase2String(number,length){

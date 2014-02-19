@@ -126,6 +126,30 @@ See [here][sublime-anf] for details
 
 [sublime-anf]: https://github.com/skuroda/Sublime-AdvancedNewFile
 
+#### Nettuts+ Fetch
+
+fetch a file/files from remote (look it as a curl command exectued by a inputted key).
+see [usage][net-fetch-usage]
+
+[net-fetch]:https://github.com/weslly/Nettuts-Fetch
+[net-fetch-usage]:http://code.tutsplus.com/articles/introducing-nettuts-fetch--net-23490
+
+#### Sublime Prefixr
+runs CSS through the Prefixr API (create cross-browser css)
+
+[prefixr]:https://github.com/wbond/sublime_prefixr
+
+#### Shell Turtlestein
+
+- Uasge : `Ctrl-Shift-C`  (Quit use ESC, up and down see the history commands)
+
+[shell-t]:https://github.com/misfo/Shell-Turtlestein
+[shell-t-d]:https://sublime.wbond.net/packages/Shell%20Turtlestein
+
+#### Sidebar Enhancements
+
+[sidebar]:https://github.com/titoBouzout/SideBarEnhancements
+
 #### SublimeREPL
 
 - Install : `CMD-P` -> `pkgctrlin` -> 'sublimerepl' (need to restart )
@@ -134,6 +158,40 @@ repl:shell can open a os shell
 
 [repl]: https://github.com/wuub/SublimeREPL/
 
+#### sublime-github
+
+[sub-github]:https://github.com/bgreenlee/sublime-github
+
+#### Jshint
+
+[jshint]: https://github.com/uipoet/sublime-jshint
+
+#### sublime linter
+A framework for interactive code linting
+
+[sublimelinter]:https://github.com/SublimeLinter/SublimeLinter3
+[linter_intro]:http://sublimelinter.readthedocs.org/en/latest/about.html#what-is-a-linter
+
+html-tidy
+
+[sublimelinter_html]:https://github.com/SublimeLinter/SublimeLinter-html-tidy
+
+#### SublimeCodeIntel
+
+Better than the default code complete.
+
+[sub-codeintel]:https://github.com/SublimeCodeIntel/SublimeCodeIntel
+
+
+#### Tag
+
+- Usage : `Crtl-Shift-,` inserted as a tag
+
+[tag]: https://github.com/SublimeText/Tag
+
+#### Spell Check
+
+Type `F6`
 
 #### Build JavaScript code
 
