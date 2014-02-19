@@ -116,6 +116,16 @@ Very useful, see the [wiki][sublime-git] for more details.
 
 [sublime-git]:https://github.com/kemayo/sublime-text-git/wiki
 
+#### Advanced New File
+
+A plugin to create file folder also 
+See [here][sublime-anf] for details
+
+- Install : `Ctrl-P` -> 'pkgin' -> 'AdvancedNewFile' 
+- Usage : `Ctrl-alt-N` 
+
+[sublime-anf]: https://github.com/skuroda/Sublime-AdvancedNewFile
+
 #### SublimeREPL
 
 - Install : `CMD-P` -> `pkgctrlin` -> 'sublimerepl' (need to restart )
