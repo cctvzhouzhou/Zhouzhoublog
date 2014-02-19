@@ -429,7 +429,18 @@ assert.true("  14 => 00000000000000000000000000001110",   toBase2String(14) === 
 assert.true("9&14 => 00000000000000000000000000001000", toBase2String(9&14) === '00000000000000000000000000001000');
 assert.true("9|14 => 00000000000000000000000000001111", toBase2String(9|14) === '00000000000000000000000000001111');
 assert.true("9^14 => 00000000000000000000000000000111", toBase2String(9^14) === '00000000000000000000000000000111');
-assert.true("  ~9 => 00000000000000000000000000000110",   toBase2String(~9) === '0110');
+assert.true("  ~9 => 11111111111111111111111111110110",   toBase2String(~9) === '11111111111111111111111111110110');
+echo("Bitwise Left shift '<<' : shift numbers bits to the left")
+assert.true("9<<1 => 00000000000000000000000000010010", toBase2String(9<<1) === '00000000000000000000000000010010');
+assert.true("9<<2 => 00000000000000000000000000100100", toBase2String(9<<2) === '00000000000000000000000000100100');
+testLeftShift(9,1);
+testLeftShift(9,2);
+testLeftShift(9,3);
+function testLeftShift(x,y){
+	assert.true(format("%s<<%s === %s*Math.pow(2,%s) === %s",x,y,x,y,toBase2String(x<<y)), x<<y === x*Math.pow(2,y)); 
+}
+
+
 var FLAG_A = 1; // 0001
 var FLAG_B = 2; // 0010
 var FLAG_C = 4; // 0100
@@ -444,8 +455,9 @@ echo("FLAG_A|FLAG_B|FLAG_C        => " + (FLAG_A|FLAG_B|FLAG_C)
 	+ " =>  " + toBase2String(FLAG_A|FLAG_B|FLAG_C));
 echo("FLAG_A|FLAG_B|FLAG_C|FLAG_D => " + (FLAG_A|FLAG_B|FLAG_C|FLAG_D) 
 	+ " => " + toBase2String(FLAG_A|FLAG_B|FLAG_C|FLAG_D));
-echo((FLAG_A|FLAG_B) === (FLAG_B|FLAG_A));
-echo((((FLAG_A|FLAG_B)|(FLAG_A|FLAG_B|FLAG_C))) === (FLAG_A|FLAG_B|FLAG_C));
+assert.true("((FLAG_A|FLAG_B) === (FLAG_B|FLAG_A))",((FLAG_A|FLAG_B) === (FLAG_B|FLAG_A)));
+assert.true("(((FLAG_A|FLAG_B)|(FLAG_A|FLAG_B|FLAG_C))) === (FLAG_A|FLAG_B|FLAG_C)",
+	((FLAG_A|FLAG_B)|(FLAG_A|FLAG_B|FLAG_C)) === (FLAG_A|FLAG_B|FLAG_C));
 
 
 function toBase2String(number,length){
