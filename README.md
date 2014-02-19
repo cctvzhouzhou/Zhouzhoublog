@@ -81,31 +81,40 @@ Download from [wbond site][pkgctr]
 
 #### Install Md extend syntax highlight
 
-- Install : `CMD-P` -> enter `pkgctri` -> enter `markdownextend`
+- Install : `CMD-P` -> enter `pkgin` -> enter `markdownextend`
 
 - Make it default : `View -> Syntax -> Open all with current extension as... -> Markdown Extended`
 
 #### Install Md proview 
 
-- Install : `CMD-P` -> enter `pkgctri` -> enter `markdownpreview`
+- Install : `CMD-P` -> enter `pkgin` -> enter `markdownpreview`
 - Usage : `Ctrl-P` (Windows/Linux) or `CMD-P` (Mac) -> enter `prewb`
 
 #### Console 
 
 ``Ctrl-` `` will open a python console (with embeded inside sublime).
 
-
 #### Terminal
 
 Sometimes, you may want a os terminal inside your working folder, here a plugin called [sublime_terminal][s_t] is.
 
-- Install : `Ctrl-P` -> `pkgcip` -> `terminal`
+- Install : `Ctrl-P` -> `pkgin` -> `terminal`
 - Usage : 
     - `Ctrl-T` open under your file
     - `Ctrl-Alt-T` open under your project 
 
 [s_t]: https://github.com/wbond/sublime_terminal
 
+
+#### Git plugin
+
+- Install : `Ctrl-P` -> 'pkgin' -> `git` 
+- Usage : 
+    - `Ctrl-P` -> `gits` : list git status 
+
+Very useful, see the [wiki][sublime-git] for more details.
+
+[sublime-git]:https://github.com/kemayo/sublime-text-git/wiki
 
 #### SublimeREPL
 
