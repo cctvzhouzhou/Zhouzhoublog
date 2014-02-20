@@ -10,11 +10,11 @@ The personal blog site hosted by github page.
 
  - Support blog function.
     - 使用Md撰写
-    - syntax highligh
-    - work with img and link (even embeded video link)
+    - syntax highlight
+    - work with img and link (even embedded video link)
 
  - Generated static site by script.
-    - use node.js javacript 
+    - use node.js JavaScript 
 
  - Design site 
 
@@ -85,7 +85,7 @@ Download from [wbond site][pkgctr]
 
 - Make it default : `View -> Syntax -> Open all with current extension as... -> Markdown Extended`
 
-#### Install Md proview 
+#### Install Md preview 
 
 - Install : `CMD-P` -> enter `pkgin` -> enter `markdownpreview`
 - Usage : `Ctrl-P` (Windows/Linux) or `CMD-P` (Mac) -> enter `prewb`
@@ -128,7 +128,8 @@ See [here][sublime-anf] for details
 
 #### Nettuts+ Fetch
 
-fetch a file/files from remote (look it as a curl command exectued by a inputted key).
+fetch a file/files from remote (look it as a curl command executed by a inputted key).
+
 see [usage][net-fetch-usage]
 
 [net-fetch]:https://github.com/weslly/Nettuts-Fetch
@@ -152,7 +153,7 @@ runs CSS through the Prefixr API (create cross-browser css)
 
 #### SublimeREPL
 
-- Install : `CMD-P` -> `pkgctrlin` -> 'sublimerepl' (need to restart )
+- Install : `CMD-P` -> `pkgin` -> 'sublimerepl' (need to restart )
 
 repl:shell can open a os shell  
 
@@ -185,13 +186,7 @@ Better than the default code complete.
 
 #### Tag
 
-- Usage : `Crtl-Shift-,` inserted as a tag
-
 [tag]: https://github.com/SublimeText/Tag
-
-#### Spell Check
-
-Type `F6`
 
 #### Build JavaScript code
 
@@ -204,7 +199,7 @@ Go to "Tools > Build System > New Build System" , add code like:
 }
 ```
 
-After that, we can use `ctrl-B` to build javascript.
+After that, we can use `ctrl-B` to build JavaScript.
 
 #### Node.js binding
 
@@ -212,7 +207,7 @@ After that, we can use `ctrl-B` to build javascript.
 
 [sublimetext-nodejs]:https://github.com/tanepiper/SublimeText-Nodejs
 
-#### Test Javascript Code
+#### Test JavaScript Code
 
 NOTE: don't forget to set the environment variable `NODE_PATH`. 
 
