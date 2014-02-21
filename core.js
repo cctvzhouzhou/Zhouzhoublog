@@ -425,11 +425,13 @@ echo("Bitwise OR  '|' : means 1 either is 1");
 echo("Bitwise XOR '^' : means 1 only if they are different");
 echo("Bitwise NOT '~'' : means inverted value");
 assert.true("   9 => 00000000000000000000000000001001",    toBase2String(9) === '00000000000000000000000000001001');
+assert.true("  -9 => 11111111111111111111111111110111",   toBase2String(-9) === '11111111111111111111111111110111');
 assert.true("  14 => 00000000000000000000000000001110",   toBase2String(14) === '00000000000000000000000000001110');
 assert.true("9&14 => 00000000000000000000000000001000", toBase2String(9&14) === '00000000000000000000000000001000');
 assert.true("9|14 => 00000000000000000000000000001111", toBase2String(9|14) === '00000000000000000000000000001111');
 assert.true("9^14 => 00000000000000000000000000000111", toBase2String(9^14) === '00000000000000000000000000000111');
 assert.true("  ~9 => 11111111111111111111111111110110",   toBase2String(~9) === '11111111111111111111111111110110');
+
 echo("Bitwise Left shift '<<' : shift numbers bits to the left")
 assert.true("9<<1 => 00000000000000000000000000010010", toBase2String(9<<1) === '00000000000000000000000000010010');
 assert.true("9<<2 => 00000000000000000000000000100100", toBase2String(9<<2) === '00000000000000000000000000100100');
@@ -440,7 +442,30 @@ function testLeftShift(x,y){
 	assert.true(format("%s<<%s === %s*Math.pow(2,%s) === %s",x,y,x,y,toBase2String(x<<y)), x<<y === x*Math.pow(2,y)); 
 }
 
+echo("Bitwise Sign right shift '>>'  : shift to right, copy new leftmost from the previous leftmost, so sign is propagating!");
+echo("Bitwise Zero right shift '>>>' : shift to right, leftmost fill with zero");
+      echo('      9 => '+toBase2String(9));
+assert.true("  9>>1 => 00000000000000000000000000000100",   toBase2String(9>>1) === '00000000000000000000000000000100');
+assert.true("  9>>2 => 00000000000000000000000000000010",   toBase2String(9>>2) === '00000000000000000000000000000010');
+assert.true(" 9>>>2 => 00000000000000000000000000000010",  toBase2String(9>>>2) === '00000000000000000000000000000010');
+      echo('     -9 => '+toBase2String(-9));
+assert.true(" -9>>2 => 11111111111111111111111111111101",  toBase2String(-9>>2) === '11111111111111111111111111111101');
+assert.true("-9>>>2 => 00111111111111111111111111111101", toBase2String(-9>>>2) === '00111111111111111111111111111101');
+echo(">> and >>> result same when numbers are non-negative.")
+testSignAndZeroShift(9,1);
+testSignAndZeroShift(9,2);
+testSignAndZeroShift(9,3);
+function testSignAndZeroShift(x,y){
+	[x,y].map((function (i) {
+		assert.ok(i>0,format("%s should not be non-negative!",i));
+    }));
+	assert.true(format("%s>>%s and %s>>>%s are same => %s",x,y,x,y,toBase2String(x>>y)), x>>y === x>>>y);
+}
 
+
+
+
+echo("\n-- FLAG Tests -- ");
 var FLAG_A = 1; // 0001
 var FLAG_B = 2; // 0010
 var FLAG_C = 4; // 0100
@@ -449,6 +474,13 @@ echo("FLAG_A = 1 => " + toBase2String(FLAG_A));
 echo("FLAG_B = 2 => " + toBase2String(FLAG_B));
 echo("FLAG_C = 4 => " + toBase2String(FLAG_C));
 echo("FLAG_D = 8 => " + toBase2String(FLAG_D));
+echo("NOTE: 1<<X is useful to instead of 1,2,4,8");
+[0,1,2,3].map(
+	(function(x){
+	assert.true(format("1<<%s === %s => %s",x,1*Math.pow(2,x),toBase2String(1<<x)), 1<<x === 1*Math.pow(2,x)); 
+	})
+);
+
 echo("FLAG_A|FLAG_B               => " + (FLAG_A|FLAG_B) + " =>  " + toBase2String(FLAG_A|FLAG_B));
 echo("FLAG_A|FLAG_C               => " + (FLAG_A|FLAG_C) + " =>  " + toBase2String(FLAG_A|FLAG_C));
 echo("FLAG_A|FLAG_B|FLAG_C        => " + (FLAG_A|FLAG_B|FLAG_C) 
@@ -459,6 +491,26 @@ assert.true("((FLAG_A|FLAG_B) === (FLAG_B|FLAG_A))",((FLAG_A|FLAG_B) === (FLAG_B
 assert.true("(((FLAG_A|FLAG_B)|(FLAG_A|FLAG_B|FLAG_C))) === (FLAG_A|FLAG_B|FLAG_C)",
 	((FLAG_A|FLAG_B)|(FLAG_A|FLAG_B|FLAG_C)) === (FLAG_A|FLAG_B|FLAG_C));
 
+var mask = FLAG_A|FLAG_B;
+var flag1 = FLAG_B
+var flag2 = FLAG_C
+echo ("if (flag&mask) { // if flag in mask , do staff }" );
+echo ("mask        = FLAG_A|FLAG_B => A and B    :"+toBase2String(mask));
+echo ("flag1       = FLAG_B        => i am B     :"+toBase2String(flag1));
+echo ("flag1&mask  = FLAG_B        => B is here  :"+toBase2String(flag1&mask));
+echo ("flag2       = FLAG_C        => i am C     :"+toBase2String(flag2));
+echo ("flag2&mask  = 0             => C not here :"+toBase2String(flag2&mask));
+
+echo ("if (flag&mask) -> test  : for example, mask=FLAG_A|FLAG_B, if flag=FLAG_A => true, if flag=FLAG_C => false  ")
+echo ("flag|=mask     -> set   : for example, flag=FLAG_A, mark=FLAG_B|FLAG_C => flag=FLAG_A|FLAG_B|FLAG_C  ")
+echo ("flag&=mask     -> clear : for example, flag=FLAG_A|FLAG_B mark = ~FLAG_A, => flag=FLAG_B");
+
+all_flag = [FLAG_A,FLAG_B,FLAG_C,FLAG_D] ;
+all_flag.map(
+	(function(flag){
+		//echo(format(" %s & %s => %s => %s");
+	})
+);
 
 function toBase2String(number,length){
 	var _size = 32 ;
