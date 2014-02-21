@@ -505,13 +505,80 @@ echo ("if (flag&mask) -> test  : for example, mask=FLAG_A|FLAG_B, if flag=FLAG_A
 echo ("flag|=mask     -> set   : for example, flag=FLAG_A, mark=FLAG_B|FLAG_C => flag=FLAG_A|FLAG_B|FLAG_C  ")
 echo ("flag&=mask     -> clear : for example, flag=FLAG_A|FLAG_B mark = ~FLAG_A, => flag=FLAG_B");
 
-all_flag = [FLAG_A,FLAG_B,FLAG_C,FLAG_D] ;
-all_flag.map(
-	(function(flag){
-		//echo(format(" %s & %s => %s => %s");
+function setBit(flags,mask){
+	return flags |= mask;
+}
+function clearBit(flags,mask){
+	return flags &= ~mask;
+}
+function toggleBit(flags,mask){
+	return flags = flags^mask;
+}
+function flipBit(flags){
+	return ~flags;
+}
+
+var all_flags = {'FLAG_A':1<<0,'FLAG_B':1<<1,'FLAG_C':1<<2,'FLAG_D':1<<3} ;
+var all_inputs = {'FLAG_A|FLAG_B':1<<0|1<<1, 'FLAG_B|FLAG_D':1<<1|1<<3}
+Object.keys(all_inputs).map(
+	(function(m){
+		_input = m;
+	    echo(format("\nInput : '%s' : %s",_input, toBase2String(all_inputs[_input])));
+		Object.keys(all_flags).map(
+			(function (n) {
+				_flag = n
+			    echo(format("   setBit(%s,%s) : %s => %s",'input',_flag,toBase2String(all_inputs[_input]),
+			    	toBase2String(setBit(all_inputs[_input],all_flags[_flag]))));
+			    echo(format(" clearBit(%s,%s) : %s => %s",'input',_flag,toBase2String(all_inputs[_input]),
+			    	toBase2String(clearBit(all_inputs[_input],all_flags[_flag]))));
+			    echo(format("toggleBit(%s,%s) : %s => %s",'input',_flag,toBase2String(all_inputs[_input]),
+			    	toBase2String(toggleBit(all_inputs[_input],all_flags[_flag]))));
+		    })
+		);
+	    echo(format("flipBit(%s) : %s => %s",'input',toBase2String(all_inputs[_input]),toBase2String(flipBit(all_inputs[_input]))));
 	})
 );
 
+var sBinString = "1011";
+var nMyNumber = parseInt(sBinString, 2);
+echo(nMyNumber); // prints 11, i.e. 1011
+var nMyNumber = 11;
+var sBinString = nMyNumber.toString(2);
+echo(sBinString); // prints 1011, i.e. 11
+
+[10,-10].map(
+	(function(n){
+		echo(format("%s => %s",createBinaryString2(n),n));
+	})
+);
+
+/**
+ * from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Bitwise_Operators
+ */
+function createBinaryString (nMask) {
+  // nMask must be between -2147483648 and 2147483647
+  for (var nFlag = 0, nShifted = nMask, sMask = ""; nFlag < 32; nFlag++, sMask += String(nShifted >>> 31), nShifted <<= 1);
+  return sMask;
+}
+/**
+ * easy looking version for inspect, don't use it for product
+ */ 
+function createBinaryString2 (number) {
+	var result ='';
+	var shifted = number;
+	echo(format("number=%s =>%s",number,toBase2String(number)))
+	for (var index = 0 ; index < 32; index++) {
+		result += String(shifted >>> 31);
+		echo(format("shiftte>>31 = %s => %s", shifted>>>31,result));
+		shifted <<= 1;
+		echo(format("shifted<<=1 = %s ",shifted));
+	}
+	return result;
+}
+
+/**
+ * By myself , ugly, by using Number.toString(2)
+ */
 function toBase2String(number,length){
 	var _size = 32 ;
 	var _number = number;
@@ -538,7 +605,7 @@ function toBase2String(number,length){
 			result = _result;
 		}
 		for (index= 0 ; index < (_size-result.length) ; index ++){
-			head+=bit;
+			head+=bit
 		}
 		return head+result;	
 	}
