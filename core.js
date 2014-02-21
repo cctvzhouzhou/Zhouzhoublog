@@ -355,7 +355,13 @@ assert.true("str.substring(-3,-1) is nothing!",str.substring(-3,-1)==='');
 var str = "\t xyz   \n"; 
 assert.strictEqual(str.trim(),'xyz'); //trim whitespace.
 var str = "AbcD"
-assert.strictEqual(str)
+assert.strictEqual(str.toUpperCase(),'ABCD');
+
+/*
+ * http://www.2ality.com/2011/10/string-concatenation.html
+ * http://www.mail-archive.com/es-discuss@mozilla.org/msg10125.html
+ */
+echo("NOTE! for JavaScript, += is good enough!");
 
 
 
