@@ -343,6 +343,21 @@ assert.true("~'foobar'.indexOf('alex') return 0", ~str.indexOf('alex') === 0);
 assert.true("~'foobar'.indexOf('wu') return 0", ~str.indexOf('wu') === 0); 
 echo("if (str.indexOf('foo') > = 0) { //found } ");
 echo("if (~str.indexOf('foo')) { //found} }");
+assert.true("'foobar'.slice(1) === 'oobar'", 'foobar'.slice(1)==='oobar');
+assert.strictEqual('foobar'.slice(3,5),'ba'); //from index to index
+assert.strictEqual('foobar'.substr(2,3),'oba'); //from index with length
+assert.strictEqual('foobar'.substring(3,5),'ba');
+assert.strictEqual('foobar'.slice(3,5),'foobar'.substring(3,5));
+var str = "I am Ok!"
+assert.strictEqual(str.slice(-3,-1),'Ok');
+echo("NOTE!, substring can't use negative value like slice do!")
+assert.true("str.substring(-3,-1) is nothing!",str.substring(-3,-1)==='');
+var str = "\t xyz   \n"; 
+assert.strictEqual(str.trim(),'xyz'); //trim whitespace.
+var str = "AbcD"
+assert.strictEqual(str)
+
+
 
 echo ("===============================================")
 echo ("---- Tests for Wrapper type : Boolean       ---")
