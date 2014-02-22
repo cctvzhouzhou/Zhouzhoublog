@@ -14,6 +14,7 @@ assert.true = function (msg,actual) {
 	assert.equal(actual, true, "'" + msg + "' : test failed!");
 	echo("'" + msg + "' : tested Ok!")
 };
+var echo = console.log;
 
 echo ("===============================================")
 echo ("------------------Testing for var x, y --------")
@@ -239,6 +240,7 @@ assert.true("[] also has a pash() method",
 	typeof [].push === "function") ; 
 assert.true("They are just same !",
 	Array.prototype.push === [].push);
+assert.true("It's a array", Array.isArray(Array.prototype));
 a = [];
 inspect("a",a);
 assert.true("Method push() will return the new length of array, so lenght is 1",
@@ -246,7 +248,11 @@ assert.true("Method push() will return the new length of array, so lenght is 1",
 assert.true("now is alex",
 	a[0] === 'alex');
 inspect("a",a);
-echo (Array.prototype.push("alex","wu")); // so push to where?
+echo (Array.prototype.push("alex","wu")); // so push to where? -> Array.prototype is array object itself.
+assert.true("Array.prototype is a array obejct",Array.isArray(Array.prototype));
+echo (Array.prototype) //now is ["alex","wu"]!
+assert.deepEqual([],[]);
+assert.deepEqual(Array.prototype,["alex","wu"]);
 
 
 
@@ -310,12 +316,6 @@ p5.y = 2
 echo (p5.s())
 echo (p5)
 
-echo ("===============================================")
-echo ("---- Tests for Function                     ---")
-echo ("===============================================")
-
-var f = function() {};
-assert.true("fuction is not object, it's supertype of object", typeof f === "function" );
 
 echo ("===============================================")
 echo ("---- Tests for instanceof                   ---")
@@ -573,6 +573,119 @@ echo(sBinString); // prints 1011, i.e. 11
 	})
 );
 
+echo ("\n===============================================")
+echo ("---- Tests for Function                     ---")
+echo ("===============================================\n")
+
+var f = function() { echo ("I am fuction")};
+assert.true("fuction is not object, it's supertype of object", typeof f === "function" );
+
+echo("\n## The function's scope :");
+echo("-------------------------")
+function foo(){
+	var x = "foo's x";
+	echo ('i am foo, I can see "'+x+'" but not y, it is "'+y+'"');
+	var b = function bar(){
+		var y = "bar's y";
+		echo('i am bar, I can see "'+x+'" and "'+y+'"');
+	};
+	return b;
+}
+f = foo();
+f();
+
+echo("\n## Using 'arguments' variable :")
+echo("-------------------------------")
+function argsTest(){
+	echo("arguments is not a Array, it's a object, in the format :");
+	echo(arguments);
+	//looks like an array, but it's not a array, Array.isArray(arguments)==false.
+	echo("there is "+arguments.length+" args");
+	if (arguments.length>0){
+		echo ("Athough we can use the array syntax to read element by index, for example:"+format(" arguments[0] = %s",arguments[0]) )
+	}
+}
+argsTest();
+argsTest('a','b',1,2);
+
+echo("\n## Missing parameters are undefined :")
+echo("-------------------------------------")
+function argsTest2(x,y){
+	echo("argsTest2 call with args :");
+	echo(arguments);
+	var parameters = {'x':x , 'y':y } ;
+    Object.keys(parameters).forEach(
+       function(x){
+           if (typeof parameters[x] === 'undefined') {
+	      	   echo("\tmissing parameter: "+x+" will get the value : "+ parameters[x]);
+           } 
+       });
+}
+argsTest2();
+argsTest2('a');
+argsTest2('a','b');
+argsTest2('a','b',1,2);
+
+echo("\n## Set default values for Missing parameters : Using ||")
+echo("-------------------------------------")
+function argsTest3(x,y){
+	x = x || 0  //if x set, x , otherwise (null, undefined) 0, 0 is the default value
+	y = y || 0
+	echo ([x,y]);
+}
+argsTest3();
+argsTest3(1);
+argsTest3(1,2);
+
+
+echo("\n## Enforce an arity for Missing parameters : Using 'arguments.length' ")
+echo("-------------------------------------")
+function argsTest4(x,y){
+	echo("argsTest4 call with args :");
+	echo(arguments);
+	if (arguments.length !== 2) {
+		echo("need exactly 2 args");
+	}
+}
+argsTest4();
+
+
+echo ("\n## Array like Objects")
+f = function f(){
+	echo("function f() is called with args:",arguments);
+	echo("\t toArray  => ",toArray(arguments));
+	echo("\t toArray2 => ",toArray2(arguments));
+	echo("\t toArray3 => ",toArray3(arguments));
+};
+
+f();
+f(1,2,3);
+
+var f = function(){
+    var _this = Object.prototype.toString.call(this);
+	if (this === a){
+		echo("this is passing in by call()  => ",_this,this);
+	}else{
+		echo("this is not pass in by call() => ",_this,"Content omitted ...");
+		//what's this?
+	}
+	echo("args is",arguments);
+}
+f.call(a,'a','b'); //first is this passing, other is the args list
+// but if you set first is null/undefined, the this will be golobal
+f.call(undefined,'a','b');
+
+
+function toArray(arrayLikeObject) {
+    return [].slice.call(arrayLikeObject); // [].slice.call -> arrayLikeObject now is the this point. 
+}
+function toArray2(arrayLikeObject) {
+	return Array.prototype.slice.call(arrayLikeObject); //slightly more performant, since no literal need be created
+	// see http://stackoverflow.com/questions/11577533/array-prototype-vs-perf
+}
+function toArray3(arrayLikeObject) {
+	return ['foo','bar'].slice.call(arrayLikeObject);
+}
 /**
  * from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Bitwise_Operators
  */
@@ -643,9 +756,13 @@ function inspect(name,variable) {
 	console.log(format("The variable '%s' is a '%s' :",name,typeof variable),variable);
 
 }
-function echo(msg) {
-	console.log(msg);
-}
+
+// function echo() {
+// 	for(var i = 0 ; i< arguments.length ; i++) {
+// 		console.log(arguments[i]);		
+// 	}
+// 	//console.log.call(console,arguments[0]);
+// }
 function assign(name, variable, value) {
 	if (name === undefined) {
 		assert.fail(name,undefined,format("Calling assign(name, variable, value) error, The variable '%s' has been assign from '%s' to '%s'",name,variable,value));
