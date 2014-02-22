@@ -589,7 +589,10 @@ echo("\n## The function's scope :");
 echo("-------------------------")
 function foo(){
 	var x = "foo's x";
-	echo ('i am foo, I can see "'+x+'" but not y, it is "'+y+'"');
+	//echo(yy); ERROR : yy will cause a ReferenceError: yy is not defined!
+	echo ("Variables are function-scoped! ('hoisted')")
+	assert.equal(y, undefined);
+	echo ('i am foo, I can see "'+x+'" and y, but now it is "'+y+'"'); //Notice, is not a ReferenceError.
 	var b = function bar(){
 		var y = "bar's y";
 		echo('i am bar, I can see "'+x+'" and "'+y+'"');
@@ -708,15 +711,62 @@ try {
 }
 echo("Following the 'try'");
 
+echo ("\n===============================================")
+echo (  "---- Tests for Closures                     ---")
+echo (  "===============================================\n")
+function iAmReturnNewFunc(start){
+	return function(){
+		echo("start now is",start);
+		return start++;
+	}
+}
 
+var inc = iAmReturnNewFunc(5);
+assert.equal(5,inc());
+assert.equal(6,inc());
+assert.equal(7,inc());
 
+function nextElement(arraylikeObject){
+	var i = 0;
+	return function() {
+		if (i == arraylikeObject.length ) i=0; //recycle to first.
+		echo("now i ==",i);
+		return arraylikeObject[i++];
+	}
+}
+var next = nextElement([1,2,3]);
+assert.equal(1,next());
+assert.equal(2,next());
+assert.equal(3,next());
+assert.equal(1,next());
+assert.equal(2,next());
+assert.equal(3,next());
+assert.equal(1,next());
 
+(function () {
+	//IIFE,introduces a new scope and prevents tmp from becoming global
+	var tmp = "I am not global";
+	echo("I am executed!");
+})(); //(Immediately Invoked Function Expression), IIFE
+echo("tmp is undefined =>",typeof tmp === "undefined");
 
+var result = [];
+for (var i=0; i < 3; i++) {
+    result.push(function () { return i });  // unwanted shared i 
+}
+assert.equal(result[0](),3); //ALL are 3! 
+assert.equal(result[1](),3);
+assert.equal(result[2](),3);
 
-
-
-
-
+var result = [];
+for (var i=0; i < 3; i++) {
+    (function(cached){
+    	result.push(function () { return cached }); 
+    })(i); // i is copyed and passed in
+}
+assert.equal(result[0](),0);//Correct result by using IIFE
+assert.equal(result[1](),1);
+assert.equal(result[2](),2);
 
 
 
