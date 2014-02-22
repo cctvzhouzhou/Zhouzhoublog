@@ -1,3 +1,4 @@
+'use strict'; //strict mode 
 /*  
  *  To run the script, 
  *     - assert , a node.js native module
@@ -271,14 +272,16 @@ echo ("===============================================")
 echo ("---- Tests for 'new' and prototype          ---")
 echo ("===============================================")
 function Point(x,y){
-	this.x = x
-	this.y = y
+	this._x = x || 0 ;
+	this._y = y || 0 ;
 }
 var p = new Point(1,1);
 inspect('p',p);
 assert.true("the p is a new Point object ",typeof p === 'object');
-assert.true("p.x === 1", p.x === 1);
-var p2 = Point(1,1); // p2 is just the return of calling of Point() funtion, there is no return , so undefined.
+assert.true("p.x === 1", p._x === 1);
+//var p2 = Point(1,1); // p2 is just the return of calling of Point() funtion, there is no return , so undefined.
+// above statement is TypeError: in strict mode.
+var p2 = Point.call(p,2,2);
 assert.true("var p2 = Point(1,1) -> p2 is just undefined!", typeof p2 === 'undefined');
 
 var p3 = {};
@@ -298,7 +301,9 @@ function Point2(x,y){
 	return x+y
 }
 var p5 = new Point2();
-var p6 = Point2();
+//var p6 = Point2(); //TypeError in strict mode
+var p6 = Point2.call(p5);
+
 echo(typeof p5);
 echo(p5);
 echo(p6);
@@ -543,11 +548,11 @@ var all_flags = {'FLAG_A':1<<0,'FLAG_B':1<<1,'FLAG_C':1<<2,'FLAG_D':1<<3} ;
 var all_inputs = {'FLAG_A|FLAG_B':1<<0|1<<1, 'FLAG_B|FLAG_D':1<<1|1<<3}
 Object.keys(all_inputs).map(
 	(function(m){
-		_input = m;
+		var _input = m;
 	    echo(format("\nInput : '%s' : %s",_input, toBase2String(all_inputs[_input])));
 		Object.keys(all_flags).map(
 			(function (n) {
-				_flag = n
+			    var _flag = n
 			    echo(format("   setBit(%s,%s) : %s => %s",'input',_flag,toBase2String(all_inputs[_input]),
 			    	toBase2String(setBit(all_inputs[_input],all_flags[_flag]))));
 			    echo(format(" clearBit(%s,%s) : %s => %s",'input',_flag,toBase2String(all_inputs[_input]),
@@ -650,7 +655,9 @@ function argsTest4(x,y){
 argsTest4();
 
 
-echo ("\n## Array like Objects")
+echo ("\n## Array like Objects and toArray()")
+echo("-------------------------------------")
+
 f = function f(){
 	echo("function f() is called with args:",arguments);
 	echo("\t toArray  => ",toArray(arguments));
@@ -674,6 +681,44 @@ var f = function(){
 f.call(a,'a','b'); //first is this passing, other is the args list
 // but if you set first is null/undefined, the this will be golobal
 f.call(undefined,'a','b');
+
+
+
+
+echo ("\n===============================================")
+echo ("---- Tests for Exception                     ---")
+echo ("===============================================\n")
+
+function throwEx() {
+	echo("In 'throwEx():\n\tbefore throw Error");
+	throw new Error('Error throwed!');
+}
+
+try {
+	echo("In 'try': \n\tbefore throwEx()");
+	throwEx();
+	echo("Never herer!");
+}catch (e){
+	echo("In 'catch':");
+	echo(e);
+	echo(e.stack);
+}finally{
+	echo("In 'finally':");
+	echo("    Finally means : after the 'try' and 'catch', but before the statements following the 'try'. ")
+}
+echo("Following the 'try'");
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 function toArray(arrayLikeObject) {
@@ -729,7 +774,7 @@ function toBase2String(number,length){
 		var result = Number(_number).toString(2);
 		if (number < 0 ) {
 			var _result = '';
-			for (index=0; index < result.length ; index ++){
+			for (var index=0; index < result.length ; index ++){
 				if (result.substr(index,1) === '1') {
                     _result += '0';
 				}else{
@@ -738,7 +783,7 @@ function toBase2String(number,length){
 			}
 			result = _result;
 		}
-		for (index= 0 ; index < (_size-result.length) ; index ++){
+		for (var index= 0 ; index < (_size-result.length) ; index ++){
 			head+=bit
 		}
 		return head+result;	
