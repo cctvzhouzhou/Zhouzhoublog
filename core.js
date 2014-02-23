@@ -768,10 +768,10 @@ assert.equal(result[0](),0);//Correct result by using IIFE
 assert.equal(result[1](),1);
 assert.equal(result[2](),2);
 
-echo ("\n===============================================")
-echo (  "---- tests for inheritance                  ---")
-echo (  "===============================================\n")
-echo ("## Extract Method");
+
+prtH1("Tests for inheritance")
+
+prtH2("Extract Method");
 var alex = {
 	name : 'Alex Wu',
 	whois : function () {
@@ -788,7 +788,7 @@ var extracted = alex.whois;
 this.name = "Just show A bug here, please don't use it"
 echo(extracted.call(this)); //when there is a 'name' property in 'this', then call successed.
 
-echo("\n## Using bind() to extract method with a given 'this'"); 
+prtH2("Using bind() to extract method with a given 'this'"); 
 //The bind() method creates a new function that, when called, 
 //has its this keyword set to the provided value, 
 //with a given sequence of arguments preceding 
@@ -814,7 +814,7 @@ var dindinw = {
 }
 echo(dindinw.whois());
 
-echo ("\n## Functions inside a method");
+prtH2 ("Functions inside a method");
 var alex = {
 	name : 'Alex Wu',
     nicknames : ['dindin','dindinw'],
@@ -855,7 +855,8 @@ var alex = {
 alex.alias2();
 alex.alias3();
 
-echo ("\n## Using Constructors :");
+prtH2 ("Using Constructors :");
+
 function Person(name){
 	this.name = name || 'unknown'; //use default value instead of null/undefined.
 }
@@ -881,8 +882,7 @@ assert.equal('Hi DinDin',Person.prototype.sayHi.call(dindin)); //OK
 );
 assert.notEqual(alex,dindin);
 
-
-
+prtH2("Test Constructors");
 
 
 
@@ -990,4 +990,54 @@ function assign(name, variable, value) {
     echo("The variable '",name,"' has been assign from",_var,"to",_v);
     variable = value;
 	return variable;
+}
+
+function prtH1(title){
+	prtH(title,{seperator:'=',center:true,});
+}
+function prtH2(title){
+	prtH("## "+title,{seperator:'-'});
+}
+function prtH3(title){
+	prtH("### "+title,{startbar:false,endbar:false});
+}
+
+function prtH(title,options){
+	var _length = options.length || 50;
+	var _sptr = options.seperator || '=';
+	var _center = options.center || false;
+	var _startbar = options.startbar || true;
+	var _endbar = options.endbar || true;
+	if (_startbar) { echo(strByCount(_sptr,_length)); }
+	if (_center)   { echo(strCenter(title,_length)); } else echo(title);
+	if (_endbar)   { echo(strByCount(_sptr,_length)); }
+}
+//TODO, remove the testing statements from the function 
+var _sptr = "-"
+assert.equal(strByCount(_sptr,1),_sptr);
+assert.equal(strByCount(_sptr,-2),'');
+assert.equal(strByCount(_sptr,0),'');
+assert.equal(strByCount("",100),"");
+
+function strCenter(title,length){
+	if (title.length < length){
+		var magrin = " ";
+		//Need to use Math.floor(number/2), beacuse All numbers in 
+		//javascript are doubles.This means no integer division by default.
+		for (var i = Math.floor((length - title.length)/2) ; i > 0 ; i--) 
+			title = magrin + title;
+	}
+	return title;
+}
+function strByCount(word,count){
+   	var _w = word||'';
+   	if (word) {
+		var _count = count||0
+   		if(count&&count>0) {
+   			for (var i = 1; i < count; i++) {
+				_w += word;
+			}
+   		}else{ return ''; }
+   	}
+	return _w;
 }
