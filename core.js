@@ -12,8 +12,8 @@ var format = require("sprintf-js").sprintf;
  * Add customize method to assert
  */
 assert.true = function (msg,actual) {
-	assert.equal(actual, true, "'" + msg + "' : test failed!");
-	echo("'" + msg + "' : tested Ok!")
+    assert.equal(actual, true, "'" + msg + "' : test failed!");
+    echo("'" + msg + "' : tested Ok!")
 };
 var echo = console.log;
 
@@ -88,7 +88,7 @@ echo ("===============================================")
 echo ("-------------- Tests for object book ----------")
 echo ("===============================================")
 var book = {
-	name:""
+    name:""
 };
 inspect("book",book);
 inspect('book.name',book.name);
@@ -103,7 +103,7 @@ inspect("book",book);
 inspect("book2",book2);
 
 var book3 = {
-	name:"book3"
+    name:"book3"
 }
 inspect("book3",book3);
 echo(format("The book == book3 is %s",book==book3));
@@ -230,24 +230,24 @@ echo ("-------------- Tests for Arrays   -------------")
 echo ("===============================================")
 
 assert.true("Array is a function",
-	typeof Array === "function");
+    typeof Array === "function");
 assert.true("Array.prototype has a push method.", 
-	typeof Array.prototype.push === "function"); 
+    typeof Array.prototype.push === "function"); 
 assert.true("[] is a array object", 
-	typeof [] === "object");
+    typeof [] === "object");
 assert.true("[].prototype is undefined, remember [] is a object",
-	typeof [].prototype === 'undefined');
+    typeof [].prototype === 'undefined');
 assert.true("[] also has a pash() method", 
-	typeof [].push === "function") ; 
+    typeof [].push === "function") ; 
 assert.true("They are just same !",
-	Array.prototype.push === [].push);
+    Array.prototype.push === [].push);
 assert.true("It's a array", Array.isArray(Array.prototype));
 a = [];
 inspect("a",a);
 assert.true("Method push() will return the new length of array, so lenght is 1",
-	a.push("alex") === 1);
+    a.push("alex") === 1);
 assert.true("now is alex",
-	a[0] === 'alex');
+    a[0] === 'alex');
 inspect("a",a);
 echo (Array.prototype.push("alex","wu")); // so push to where? -> Array.prototype is array object itself.
 assert.true("Array.prototype is a array obejct",Array.isArray(Array.prototype));
@@ -272,8 +272,8 @@ echo ("===============================================")
 echo ("---- Tests for 'new' and prototype          ---")
 echo ("===============================================")
 function Point(x,y){
-	this._x = x || 0 ;
-	this._y = y || 0 ;
+    this._x = x || 0 ;
+    this._y = y || 0 ;
 }
 var p = new Point(1,1);
 inspect('p',p);
@@ -296,9 +296,9 @@ var p4 = new Point(); //new is just a create of this and assign
 assert.true("p4.x and p4.y are all undefined", p4.x === undefined);
 
 function Point2(x,y){
-	this.x = x
-	this.y = y
-	return x+y
+    this.x = x
+    this.y = y
+    return x+y
 }
 var p5 = new Point2();
 //var p6 = Point2(); //TypeError in strict mode
@@ -313,8 +313,8 @@ echo(p5)
 p6.x = 1 //no effect
 echo (p6);
 Point2.prototype.s = function() {
-	if (this.x === undefined || this.y === undefined) return 0;
-	return this.x + this.y ;
+    if (this.x === undefined || this.y === undefined) return 0;
+    return this.x + this.y ;
 }
 echo (p5.s())
 p5.y = 2
@@ -389,7 +389,7 @@ echo ("===============================================")
 echo ("---- Tests for Binary logical               ---")
 echo ("===============================================")
 function foo() {
-	assert.fail("the function foo should never called!")
+    assert.fail("the function foo should never called!")
 }
 echo ("false && foo() : the function foo() is never called. ")
 false && foo() 
@@ -465,7 +465,7 @@ testLeftShift(9,1);
 testLeftShift(9,2);
 testLeftShift(9,3);
 function testLeftShift(x,y){
-	assert.true(format("%s<<%s === %s*Math.pow(2,%s) === %s",x,y,x,y,toBase2String(x<<y)), x<<y === x*Math.pow(2,y)); 
+    assert.true(format("%s<<%s === %s*Math.pow(2,%s) === %s",x,y,x,y,toBase2String(x<<y)), x<<y === x*Math.pow(2,y)); 
 }
 
 echo("Bitwise Sign right shift '>>'  : shift to right, copy new leftmost from the previous leftmost, so sign is propagating!");
@@ -482,10 +482,10 @@ testSignAndZeroShift(9,1);
 testSignAndZeroShift(9,2);
 testSignAndZeroShift(9,3);
 function testSignAndZeroShift(x,y){
-	[x,y].map((function (i) {
-		assert.ok(i>0,format("%s should not be non-negative!",i));
+    [x,y].map((function (i) {
+        assert.ok(i>0,format("%s should not be non-negative!",i));
     }));
-	assert.true(format("%s>>%s and %s>>>%s are same => %s",x,y,x,y,toBase2String(x>>y)), x>>y === x>>>y);
+    assert.true(format("%s>>%s and %s>>>%s are same => %s",x,y,x,y,toBase2String(x>>y)), x>>y === x>>>y);
 }
 
 
@@ -502,20 +502,20 @@ echo("FLAG_C = 4 => " + toBase2String(FLAG_C));
 echo("FLAG_D = 8 => " + toBase2String(FLAG_D));
 echo("NOTE: 1<<X is useful to instead of 1,2,4,8");
 [0,1,2,3].map(
-	(function(x){
-	assert.true(format("1<<%s === %s => %s",x,1*Math.pow(2,x),toBase2String(1<<x)), 1<<x === 1*Math.pow(2,x)); 
-	})
+    (function(x){
+    assert.true(format("1<<%s === %s => %s",x,1*Math.pow(2,x),toBase2String(1<<x)), 1<<x === 1*Math.pow(2,x)); 
+    })
 );
 
 echo("FLAG_A|FLAG_B               => " + (FLAG_A|FLAG_B) + " =>  " + toBase2String(FLAG_A|FLAG_B));
 echo("FLAG_A|FLAG_C               => " + (FLAG_A|FLAG_C) + " =>  " + toBase2String(FLAG_A|FLAG_C));
 echo("FLAG_A|FLAG_B|FLAG_C        => " + (FLAG_A|FLAG_B|FLAG_C) 
-	+ " =>  " + toBase2String(FLAG_A|FLAG_B|FLAG_C));
+    + " =>  " + toBase2String(FLAG_A|FLAG_B|FLAG_C));
 echo("FLAG_A|FLAG_B|FLAG_C|FLAG_D => " + (FLAG_A|FLAG_B|FLAG_C|FLAG_D) 
-	+ " => " + toBase2String(FLAG_A|FLAG_B|FLAG_C|FLAG_D));
+    + " => " + toBase2String(FLAG_A|FLAG_B|FLAG_C|FLAG_D));
 assert.true("((FLAG_A|FLAG_B) === (FLAG_B|FLAG_A))",((FLAG_A|FLAG_B) === (FLAG_B|FLAG_A)));
 assert.true("(((FLAG_A|FLAG_B)|(FLAG_A|FLAG_B|FLAG_C))) === (FLAG_A|FLAG_B|FLAG_C)",
-	((FLAG_A|FLAG_B)|(FLAG_A|FLAG_B|FLAG_C)) === (FLAG_A|FLAG_B|FLAG_C));
+    ((FLAG_A|FLAG_B)|(FLAG_A|FLAG_B|FLAG_C)) === (FLAG_A|FLAG_B|FLAG_C));
 
 var mask = FLAG_A|FLAG_B;
 var flag1 = FLAG_B
@@ -532,37 +532,37 @@ echo ("flag|=mask     -> set   : for example, flag=FLAG_A, mark=FLAG_B|FLAG_C =>
 echo ("flag&=mask     -> clear : for example, flag=FLAG_A|FLAG_B mark = ~FLAG_A, => flag=FLAG_B");
 
 function setBit(flags,mask){
-	return flags |= mask;
+    return flags |= mask;
 }
 function clearBit(flags,mask){
-	return flags &= ~mask;
+    return flags &= ~mask;
 }
 function toggleBit(flags,mask){
-	return flags = flags^mask;
+    return flags = flags^mask;
 }
 function flipBit(flags){
-	return ~flags;
+    return ~flags;
 }
 
 var all_flags = {'FLAG_A':1<<0,'FLAG_B':1<<1,'FLAG_C':1<<2,'FLAG_D':1<<3} ;
 var all_inputs = {'FLAG_A|FLAG_B':1<<0|1<<1, 'FLAG_B|FLAG_D':1<<1|1<<3}
 Object.keys(all_inputs).map(
-	(function(m){
-		var _input = m;
-	    echo(format("\nInput : '%s' : %s",_input, toBase2String(all_inputs[_input])));
-		Object.keys(all_flags).map(
-			(function (n) {
-			    var _flag = n
-			    echo(format("   setBit(%s,%s) : %s => %s",'input',_flag,toBase2String(all_inputs[_input]),
-			    	toBase2String(setBit(all_inputs[_input],all_flags[_flag]))));
-			    echo(format(" clearBit(%s,%s) : %s => %s",'input',_flag,toBase2String(all_inputs[_input]),
-			    	toBase2String(clearBit(all_inputs[_input],all_flags[_flag]))));
-			    echo(format("toggleBit(%s,%s) : %s => %s",'input',_flag,toBase2String(all_inputs[_input]),
-			    	toBase2String(toggleBit(all_inputs[_input],all_flags[_flag]))));
-		    })
-		);
-	    echo(format("flipBit(%s) : %s => %s",'input',toBase2String(all_inputs[_input]),toBase2String(flipBit(all_inputs[_input]))));
-	})
+    (function(m){
+        var _input = m;
+        echo(format("\nInput : '%s' : %s",_input, toBase2String(all_inputs[_input])));
+        Object.keys(all_flags).map(
+            (function (n) {
+                var _flag = n
+                echo(format("   setBit(%s,%s) : %s => %s",'input',_flag,toBase2String(all_inputs[_input]),
+                    toBase2String(setBit(all_inputs[_input],all_flags[_flag]))));
+                echo(format(" clearBit(%s,%s) : %s => %s",'input',_flag,toBase2String(all_inputs[_input]),
+                    toBase2String(clearBit(all_inputs[_input],all_flags[_flag]))));
+                echo(format("toggleBit(%s,%s) : %s => %s",'input',_flag,toBase2String(all_inputs[_input]),
+                    toBase2String(toggleBit(all_inputs[_input],all_flags[_flag]))));
+            })
+        );
+        echo(format("flipBit(%s) : %s => %s",'input',toBase2String(all_inputs[_input]),toBase2String(flipBit(all_inputs[_input]))));
+    })
 );
 
 var sBinString = "1011";
@@ -573,9 +573,9 @@ var sBinString = nMyNumber.toString(2);
 echo(sBinString); // prints 1011, i.e. 11
 
 [10,-10].map(
-	(function(n){
-		echo(format("%s => %s",createBinaryString2(n),n));
-	})
+    (function(n){
+        echo(format("%s => %s",createBinaryString2(n),n));
+    })
 );
 
 echo ("\n===============================================")
@@ -588,16 +588,16 @@ assert.true("fuction is not object, it's supertype of object", typeof f === "fun
 echo("\n## The function's scope :");
 echo("-------------------------")
 function foo(){
-	var x = "foo's x";
-	//echo(yy); ERROR : yy will cause a ReferenceError: yy is not defined!
-	echo ("Variables are function-scoped! ('hoisted')")
-	assert.equal(y, undefined);
-	echo ('i am foo, I can see "'+x+'" and y, but now it is "'+y+'"'); //Notice, is not a ReferenceError.
-	var b = function bar(){
-		var y = "bar's y";
-		echo('i am bar, I can see "'+x+'" and "'+y+'"');
-	};
-	return b;
+    var x = "foo's x";
+    //echo(yy); ERROR : yy will cause a ReferenceError: yy is not defined!
+    echo ("Variables are function-scoped! ('hoisted')")
+    assert.equal(y, undefined);
+    echo ('i am foo, I can see "'+x+'" and y, but now it is "'+y+'"'); //Notice, is not a ReferenceError.
+    var b = function bar(){
+        var y = "bar's y";
+        echo('i am bar, I can see "'+x+'" and "'+y+'"');
+    };
+    return b;
 }
 f = foo();
 f();
@@ -605,13 +605,13 @@ f();
 echo("\n## Using 'arguments' variable :")
 echo("-------------------------------")
 function argsTest(){
-	echo("arguments is not a Array, it's a object, in the format :");
-	echo(arguments);
-	//looks like an array, but it's not a array, Array.isArray(arguments)==false.
-	echo("there is "+arguments.length+" args");
-	if (arguments.length>0){
-		echo ("Athough we can use the array syntax to read element by index, for example:"+format(" arguments[0] = %s",arguments[0]) )
-	}
+    echo("arguments is not a Array, it's a object, in the format :");
+    echo(arguments);
+    //looks like an array, but it's not a array, Array.isArray(arguments)==false.
+    echo("there is "+arguments.length+" args");
+    if (arguments.length>0){
+        echo ("Athough we can use the array syntax to read element by index, for example:"+format(" arguments[0] = %s",arguments[0]) )
+    }
 }
 argsTest();
 argsTest('a','b',1,2);
@@ -619,13 +619,13 @@ argsTest('a','b',1,2);
 echo("\n## Missing parameters are undefined :")
 echo("-------------------------------------")
 function argsTest2(x,y){
-	echo("argsTest2 call with args :");
-	echo(arguments);
-	var parameters = {'x':x , 'y':y } ;
+    echo("argsTest2 call with args :");
+    echo(arguments);
+    var parameters = {'x':x , 'y':y } ;
     Object.keys(parameters).forEach(
        function(x){
            if (typeof parameters[x] === 'undefined') {
-	      	   echo("\tmissing parameter: "+x+" will get the value : "+ parameters[x]);
+               echo("\tmissing parameter: "+x+" will get the value : "+ parameters[x]);
            } 
        });
 }
@@ -637,9 +637,9 @@ argsTest2('a','b',1,2);
 echo("\n## Set default values for Missing parameters : Using ||")
 echo("-------------------------------------")
 function argsTest3(x,y){
-	x = x || 0  //if x set, x , otherwise (null, undefined) 0, 0 is the default value
-	y = y || 0
-	echo ([x,y]);
+    x = x || 0  //if x set, x , otherwise (null, undefined) 0, 0 is the default value
+    y = y || 0
+    echo ([x,y]);
 }
 argsTest3();
 argsTest3(1);
@@ -649,11 +649,11 @@ argsTest3(1,2);
 echo("\n## Enforce an arity for Missing parameters : Using 'arguments.length' ")
 echo("-------------------------------------")
 function argsTest4(x,y){
-	echo("argsTest4 call with args :");
-	echo(arguments);
-	if (arguments.length !== 2) {
-		echo("need exactly 2 args");
-	}
+    echo("argsTest4 call with args :");
+    echo(arguments);
+    if (arguments.length !== 2) {
+        echo("need exactly 2 args");
+    }
 }
 argsTest4();
 
@@ -662,10 +662,10 @@ echo ("\n## Array like Objects and toArray()")
 echo("-------------------------------------")
 
 f = function f(){
-	echo("function f() is called with args:",arguments);
-	echo("\t toArray  => ",toArray(arguments));
-	echo("\t toArray2 => ",toArray2(arguments));
-	echo("\t toArray3 => ",toArray3(arguments));
+    echo("function f() is called with args:",arguments);
+    echo("\t toArray  => ",toArray(arguments));
+    echo("\t toArray2 => ",toArray2(arguments));
+    echo("\t toArray3 => ",toArray3(arguments));
 };
 
 f();
@@ -673,13 +673,13 @@ f(1,2,3);
 
 var f = function(){
     var _this = Object.prototype.toString.call(this);
-	if (this === a){
-		echo("this is passing in by call()  => ",_this,this);
-	}else{
-		echo("this is not pass in by call() => ",_this,"Content omitted ...");
-		//what's this?
-	}
-	echo("args is",arguments);
+    if (this === a){
+        echo("this is passing in by call()  => ",_this,this);
+    }else{
+        echo("this is not pass in by call() => ",_this,"Content omitted ...");
+        //what's this?
+    }
+    echo("args is",arguments);
 }
 f.call(a,'a','b'); //first is this passing, other is the args list
 // but if you set first is null/undefined, the this will be golobal
@@ -693,21 +693,21 @@ echo ("---- Tests for Exception                     ---")
 echo ("===============================================\n")
 
 function throwEx() {
-	echo("In 'throwEx():\n\tbefore throw Error");
-	throw new Error('Error throwed!');
+    echo("In 'throwEx():\n\tbefore throw Error");
+    throw new Error('Error throwed!');
 }
 
 try {
-	echo("In 'try': \n\tbefore throwEx()");
-	throwEx();
-	echo("Never herer!");
+    echo("In 'try': \n\tbefore throwEx()");
+    throwEx();
+    echo("Never herer!");
 }catch (e){
-	echo("In 'catch':");
-	echo(e);
-	echo(e.stack);
+    echo("In 'catch':");
+    echo(e);
+    echo(e.stack);
 }finally{
-	echo("In 'finally':");
-	echo("    Finally means : after the 'try' and 'catch', but before the statements following the 'try'. ")
+    echo("In 'finally':");
+    echo("    Finally means : after the 'try' and 'catch', but before the statements following the 'try'. ")
 }
 echo("Following the 'try'");
 
@@ -715,10 +715,10 @@ echo ("\n===============================================")
 echo (  "---- tests for closures                     ---")
 echo (  "===============================================\n")
 function iAmReturnNewFunc(start){
-	return function(){
-		echo("start now is",start);
-		return start++;
-	}
+    return function(){
+        echo("start now is",start);
+        return start++;
+    }
 }
 
 var inc = iAmReturnNewFunc(5);
@@ -727,12 +727,12 @@ assert.equal(6,inc());
 assert.equal(7,inc());
 
 function nextElement(arraylikeObject){
-	var i = 0;
-	return function() {
-		if (i == arraylikeObject.length ) i=0; //recycle to first.
-		echo("now i ==",i);
-		return arraylikeObject[i++];
-	}
+    var i = 0;
+    return function() {
+        if (i == arraylikeObject.length ) i=0; //recycle to first.
+        echo("now i ==",i);
+        return arraylikeObject[i++];
+    }
 }
 var next = nextElement([1,2,3]);
 assert.equal(1,next());
@@ -744,9 +744,9 @@ assert.equal(3,next());
 assert.equal(1,next());
 
 (function () {
-	//IIFE,introduces a new scope and prevents tmp from becoming global
-	var tmp = "I am not global";
-	echo("I am executed!");
+    //IIFE,introduces a new scope and prevents tmp from becoming global
+    var tmp = "I am not global";
+    echo("I am executed!");
 })(); //(Immediately Invoked Function Expression), IIFE
 echo("tmp is undefined =>",typeof tmp === "undefined");
 
@@ -761,7 +761,7 @@ assert.equal(result[2](),3);
 var result = [];
 for (var i=0; i < 3; i++) {
     (function(cached){
-    	result.push(function () { return cached }); 
+        result.push(function () { return cached }); 
     })(i); // i is copyed and passed in
 }
 assert.equal(result[0](),0);//Correct result by using IIFE
@@ -773,11 +773,11 @@ prtH1("Tests for inheritance")
 
 prtH2("Extract Method");
 var alex = {
-	name : 'Alex Wu',
-	whois : function () {
-		'use strict'
-		return "My name is "+this.name;
-	}
+    name : 'Alex Wu',
+    whois : function () {
+        'use strict'
+        return "My name is "+this.name;
+    }
 }
 echo(alex.name);
 echo(alex.whois());
@@ -797,7 +797,7 @@ var extracted2 = alex.whois.bind(alex);
 echo(extracted2());
 echo("bind to differnt object, it's just awsome!");
 var dindin = {
-	name : 'DinDin'
+    name : 'DinDin'
 }
 var extracted3 = alex.whois.bind(dindin);
 echo(extracted3());
@@ -805,50 +805,50 @@ delete dindin.name
 echo(extracted3()); // is undefined now!
 
 var dindinw = {
-	name : 'dindinw',
-	whois : function () {
-		return alex.whois.bind(this)();
-		//return alex.whois.call(this); same with call() method?
+    name : 'dindinw',
+    whois : function () {
+        return alex.whois.bind(this)();
+        //return alex.whois.call(this); same with call() method?
 
-	}
+    }
 }
 echo(dindinw.whois());
 
 prtH2 ("Functions inside a method");
 var alex = {
-	name : 'Alex Wu',
+    name : 'Alex Wu',
     nicknames : ['dindin','dindinw'],
-	whois : function () {
-		'use strict';
-		return "My name is "+this.name;
-	},
-	alias : function () {
-		'use strict';
-		this.nicknames.forEach(
-			function (nick) {
-				echo ("\t"+this.name+"'s nick name contains: "+nick); // TypeError, this has not name properties.
-			}
-		);
-	},
-	alias2 : function () {
-		'use strict';
-		echo("alias2(), pass in 'this' when use 'forEach'.")
-		this.nicknames.forEach(
-			function (nick) {
-				echo ("\t"+this.name+"'s nick name contains: "+nick); //
-			}
-		,this); //the second parameter will be passed in, now inside this has the property 'name'. 
-	},
-	alias3 : function () {
-		'use strict';
-		echo("alias3(), save 'this' by annother name.")
-		var that = this; // use 'that' to cache 'this'
-		this.nicknames.forEach(
-			function (nick) {
-				echo ("\t"+that.name+"'s nick name contains: "+nick); //
-			}
-		); 
-	}
+    whois : function () {
+        'use strict';
+        return "My name is "+this.name;
+    },
+    alias : function () {
+        'use strict';
+        this.nicknames.forEach(
+            function (nick) {
+                echo ("\t"+this.name+"'s nick name contains: "+nick); // TypeError, this has not name properties.
+            }
+        );
+    },
+    alias2 : function () {
+        'use strict';
+        echo("alias2(), pass in 'this' when use 'forEach'.")
+        this.nicknames.forEach(
+            function (nick) {
+                echo ("\t"+this.name+"'s nick name contains: "+nick); //
+            }
+        ,this); //the second parameter will be passed in, now inside this has the property 'name'. 
+    },
+    alias3 : function () {
+        'use strict';
+        echo("alias3(), save 'this' by annother name.")
+        var that = this; // use 'that' to cache 'this'
+        this.nicknames.forEach(
+            function (nick) {
+                echo ("\t"+that.name+"'s nick name contains: "+nick); //
+            }
+        ); 
+    }
 }
 
 //alex.alias(); //Failure
@@ -858,7 +858,7 @@ alex.alias3();
 prtH2 ("Using Constructors :");
 
 function Person(name){
-	this.name = name || 'unknown'; //use default value instead of null/undefined.
+    this.name = name || 'unknown'; //use default value instead of null/undefined.
 }
 var alex = new Person('alex');
 assert.equal(alex.name,'alex');
@@ -867,35 +867,48 @@ assert.strictEqual(alex.prototype,undefined);
 echo("Every Fuction has a prototype object : ",Object.prototype.toString.call(Person.prototype));
 
 Person.prototype.sayHi = function() {
-	return "Hi "+this.name;
+    return "Hi "+this.name;
 };
 
 var dindin = new Person('DinDin');
+var dindinw = {name:'dindinw'};
+dindinw.sayHi = dindin.sayHi;
+echo(dindinw);
+
+var dindinw2 = {name:'dindinw2',sayHi:function(){ return "I am a fake sayHi, hi "+this.name}};
+
 assert.equal(dindin.sayHi(),'Hi DinDin');
 assert.equal(Person.prototype.sayHi(),'Hi undefined'); //it's undefined
 assert.equal('Hi DinDin',Person.prototype.sayHi.call(dindin)); //OK
-[alex,dindin].forEach(
-	function (p) {
-		echo (p.sayHi());
-  		echo ("Object:",p,"is instanceof Person =>",p instanceof Person);
-  	}
+[alex,dindin,dindinw,dindinw2].forEach(
+    function (p) {
+        // NOTE, last two are not persons. but it's person like!
+        echo ("Object:",p,p instanceof Person?"is":"is not","a instanceof Person"); 
+        echo (p.sayHi());
+    }
 );
-assert.notEqual(alex,dindin);
-
-prtH2("Test Constructors");
 
 
+
+
+prtH2("Test RegExp");
+var r = /^abc[0-9]$/
+inspect(r.toString(),r);
+assert.equal(r.test('abc'),false);
+[0,1,2,3,4,5,6,7,8,9].forEach(
+    function(i){assert.equal(r.test('abc'+i),true,"in testing '"+r+"'.test('abc"+i+"'), i="+i);}
+);
 
 
 function toArray(arrayLikeObject) {
     return [].slice.call(arrayLikeObject); // [].slice.call -> arrayLikeObject now is the this point. 
 }
 function toArray2(arrayLikeObject) {
-	return Array.prototype.slice.call(arrayLikeObject); //slightly more performant, since no literal need be created
-	// see http://stackoverflow.com/questions/11577533/array-prototype-vs-perf
+    return Array.prototype.slice.call(arrayLikeObject); //slightly more performant, since no literal need be created
+    // see http://stackoverflow.com/questions/11577533/array-prototype-vs-perf
 }
 function toArray3(arrayLikeObject) {
-	return ['foo','bar'].slice.call(arrayLikeObject);
+    return ['foo','bar'].slice.call(arrayLikeObject);
 }
 /**
  * from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Bitwise_Operators
@@ -909,108 +922,108 @@ function createBinaryString (nMask) {
  * easy looking version for inspect, don't use it for product
  */ 
 function createBinaryString2 (number) {
-	var result ='';
-	var shifted = number;
-	echo(format("number=%s =>%s",number,toBase2String(number)))
-	for (var index = 0 ; index < 32; index++) {
-		result += String(shifted >>> 31);
-		echo(format("shiftte>>31 = %s => %s", shifted>>>31,result));
-		shifted <<= 1;
-		echo(format("shifted<<=1 = %s ",shifted));
-	}
-	return result;
+    var result ='';
+    var shifted = number;
+    echo(format("number=%s =>%s",number,toBase2String(number)))
+    for (var index = 0 ; index < 32; index++) {
+        result += String(shifted >>> 31);
+        echo(format("shiftte>>31 = %s => %s", shifted>>>31,result));
+        shifted <<= 1;
+        echo(format("shifted<<=1 = %s ",shifted));
+    }
+    return result;
 }
 
 /**
  * By myself , ugly, by using Number.toString(2)
  */
 function toBase2String(number,length){
-	var _size = 32 ;
-	var _number = number;
-	if (length && typeof length === 'number'){
-		_size = length;
-	}
-	if (typeof _number === 'number') {
-		var head ='';
+    var _size = 32 ;
+    var _number = number;
+    if (length && typeof length === 'number'){
+        _size = length;
+    }
+    if (typeof _number === 'number') {
+        var head ='';
         var bit = '0';
-		if (number < 0) {
-			_number  = (-_number) -1 ;
-			bit = '1';  
-		} 
-		var result = Number(_number).toString(2);
-		if (number < 0 ) {
-			var _result = '';
-			for (var index=0; index < result.length ; index ++){
-				if (result.substr(index,1) === '1') {
+        if (number < 0) {
+            _number  = (-_number) -1 ;
+            bit = '1';  
+        } 
+        var result = Number(_number).toString(2);
+        if (number < 0 ) {
+            var _result = '';
+            for (var index=0; index < result.length ; index ++){
+                if (result.substr(index,1) === '1') {
                     _result += '0';
-				}else{
-					_result += '1';
-				}
-			}
-			result = _result;
-		}
-		for (var index= 0 ; index < (_size-result.length) ; index ++){
-			head+=bit
-		}
-		return head+result;	
-	}
+                }else{
+                    _result += '1';
+                }
+            }
+            result = _result;
+        }
+        for (var index= 0 ; index < (_size-result.length) ; index ++){
+            head+=bit
+        }
+        return head+result; 
+    }
 }
 
 function test_buildin(name,variable) {
-	if (typeof variable === 'object'){
-		echo(name,"is a",Object.prototype.toString.call(variable)); 
-	} else {
-		echo(name,"is a",typeof variable);
-	}
+    if (typeof variable === 'object'){
+        echo(name,"is a",Object.prototype.toString.call(variable)); 
+    } else {
+        echo(name,"is a",typeof variable);
+    }
 }
 
 function inspect(name,variable) {
-	if (typeof name != 'string') {
-		assert.fail(name,undefined,format("call inspect(name,variable) error, 'name' is '%s' and 'variable' is '%s'",name,variable))
-	}
-	echo("The variable '",name,"' is a",Object.prototype.toString.call(variable));
+    if (typeof name != 'string') {
+        assert.fail(name,undefined,format("call inspect(name,variable) error, 'name' is '%s' and 'variable' is '%s'",name,variable))
+    }
+    echo("The variable '",name,"' is a",Object.prototype.toString.call(variable));
 
 }
 
 // function echo() {
-// 	for(var i = 0 ; i< arguments.length ; i++) {
-// 		console.log(arguments[i]);		
-// 	}
-// 	//console.log.call(console,arguments[0]);
+//  for(var i = 0 ; i< arguments.length ; i++) {
+//      console.log(arguments[i]);      
+//  }
+//  //console.log.call(console,arguments[0]);
 // }
 function assign(name, variable, value) {
-	if (name === undefined) {
-		assert.fail(name,undefined,format("Calling assign(name, variable, value) error, The variable '%s' has been assign from '%s' to '%s'",name,variable,value));
-	}
-	var _var = variable;
-	var _v = value;
-    //petty print out for string	
-	if (typeof variable == 'string') { _var = "'"+variable+"'"}; 
-	if (typeof value == 'string') { _v = "'"+value+"'"}
+    if (name === undefined) {
+        assert.fail(name,undefined,format("Calling assign(name, variable, value) error, The variable '%s' has been assign from '%s' to '%s'",name,variable,value));
+    }
+    var _var = variable;
+    var _v = value;
+    //petty print out for string    
+    if (typeof variable == 'string') { _var = "'"+variable+"'"}; 
+    if (typeof value == 'string') { _v = "'"+value+"'"}
     echo("The variable '",name,"' has been assign from",_var,"to",_v);
     variable = value;
-	return variable;
+    return variable;
 }
 
 function prtH1(title){
-	prtH(title,{seperator:'=',center:true,});
+    prtH(title,{seperator:'=',center:true,});
 }
 function prtH2(title){
-	prtH("## "+title,{seperator:'-'});
+    prtH("## "+title,{seperator:'-'});
 }
 function prtH3(title){
-	prtH("### "+title,{startbar:false,endbar:false});
+    prtH("### "+title,{startbar:false,endbar:false});
 }
 
 function prtH(title,options){
-	var _length = options.length || 50;
-	var _sptr = options.seperator || '=';
-	var _center = options.center || false;
-	var _startbar = options.startbar || true;
-	var _endbar = options.endbar || true;
-	if (_startbar) { echo(strByCount(_sptr,_length)); }
-	if (_center)   { echo(strCenter(title,_length)); } else echo(title);
-	if (_endbar)   { echo(strByCount(_sptr,_length)); }
+    var _length = options.length || 50;
+    var _sptr = options.seperator || '=';
+    var _center = options.center || false;
+    var _startbar = options.startbar || true;
+    var _endbar = options.endbar || true;
+    if (_startbar) { echo(strByCount(_sptr,_length)); }
+    if (_center)   { echo(strCenter(title,_length)); } else echo(title);
+    if (_endbar)   { echo(strByCount(_sptr,_length)); }
 }
 //TODO, remove the testing statements from the function 
 var _sptr = "-"
@@ -1020,24 +1033,24 @@ assert.equal(strByCount(_sptr,0),'');
 assert.equal(strByCount("",100),"");
 
 function strCenter(title,length){
-	if (title.length < length){
-		var magrin = " ";
-		//Need to use Math.floor(number/2), beacuse All numbers in 
-		//javascript are doubles.This means no integer division by default.
-		for (var i = Math.floor((length - title.length)/2) ; i > 0 ; i--) 
-			title = magrin + title;
-	}
-	return title;
+    if (title.length < length){
+        var magrin = " ";
+        //Need to use Math.floor(number/2), beacuse All numbers in 
+        //javascript are doubles.This means no integer division by default.
+        for (var i = Math.floor((length - title.length)/2) ; i > 0 ; i--) 
+            title = magrin + title;
+    }
+    return title;
 }
 function strByCount(word,count){
-   	var _w = word||'';
-   	if (word) {
-		var _count = count||0
-   		if(count&&count>0) {
-   			for (var i = 1; i < count; i++) {
-				_w += word;
-			}
-   		}else{ return ''; }
-   	}
-	return _w;
+    var _w = word||'';
+    if (word) {
+        var _count = count||0
+        if(count&&count>0) {
+            for (var i = 1; i < count; i++) {
+                _w += word;
+            }
+        }else{ return ''; }
+    }
+    return _w;
 }

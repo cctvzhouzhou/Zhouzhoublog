@@ -46,6 +46,21 @@ for d in blog doc js css ; do p=site/$d ; mkdir -p $p ; touch $p/.gitignore ; do
 ```
 ### Setup Sublime Text 
 
+#### User Setting
+
+`Ctrl-P`-> `user`
+
+The 4 space per tab 
+
+```
+{
+    "tab_size": 4,
+    "translate_tabs_to_spaces": true, 
+    "detect_indentation": false
+}
+```
+ note: `detect_indentation` to `false` will let Sublime stop to guess which indendation style to use when opening files.
+ 
 #### Active Vim mode
 
 1. for sublime 2, [vintage][v1] is good enough.
