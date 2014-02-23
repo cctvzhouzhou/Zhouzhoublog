@@ -712,7 +712,7 @@ try {
 echo("Following the 'try'");
 
 echo ("\n===============================================")
-echo (  "---- Tests for Closures                     ---")
+echo (  "---- tests for closures                     ---")
 echo (  "===============================================\n")
 function iAmReturnNewFunc(start){
 	return function(){
@@ -767,6 +767,122 @@ for (var i=0; i < 3; i++) {
 assert.equal(result[0](),0);//Correct result by using IIFE
 assert.equal(result[1](),1);
 assert.equal(result[2](),2);
+
+echo ("\n===============================================")
+echo (  "---- tests for inheritance                  ---")
+echo (  "===============================================\n")
+echo ("## Extract Method");
+var alex = {
+	name : 'Alex Wu',
+	whois : function () {
+		'use strict'
+		return "My name is "+this.name;
+	}
+}
+echo(alex.name);
+echo(alex.whois());
+var extracted = alex.whois;
+
+//echo(extracted()); //a TypeError here, Cannot read property 'name' of undefined 
+
+this.name = "Just show A bug here, please don't use it"
+echo(extracted.call(this)); //when there is a 'name' property in 'this', then call successed.
+
+echo("\n## Using bind() to extract method with a given 'this'"); 
+//The bind() method creates a new function that, when called, 
+//has its this keyword set to the provided value, 
+//with a given sequence of arguments preceding 
+//any provided when the new function is called.
+var extracted2 = alex.whois.bind(alex);
+echo(extracted2());
+echo("bind to differnt object, it's just awsome!");
+var dindin = {
+	name : 'DinDin'
+}
+var extracted3 = alex.whois.bind(dindin);
+echo(extracted3());
+delete dindin.name
+echo(extracted3()); // is undefined now!
+
+var dindinw = {
+	name : 'dindinw',
+	whois : function () {
+		return alex.whois.bind(this)();
+		//return alex.whois.call(this); same with call() method?
+
+	}
+}
+echo(dindinw.whois());
+
+echo ("\n## Functions inside a method");
+var alex = {
+	name : 'Alex Wu',
+    nicknames : ['dindin','dindinw'],
+	whois : function () {
+		'use strict';
+		return "My name is "+this.name;
+	},
+	alias : function () {
+		'use strict';
+		this.nicknames.forEach(
+			function (nick) {
+				echo ("\t"+this.name+"'s nick name contains: "+nick); // TypeError, this has not name properties.
+			}
+		);
+	},
+	alias2 : function () {
+		'use strict';
+		echo("alias2(), pass in 'this' when use 'forEach'.")
+		this.nicknames.forEach(
+			function (nick) {
+				echo ("\t"+this.name+"'s nick name contains: "+nick); //
+			}
+		,this); //the second parameter will be passed in, now inside this has the property 'name'. 
+	},
+	alias3 : function () {
+		'use strict';
+		echo("alias3(), save 'this' by annother name.")
+		var that = this; // use 'that' to cache 'this'
+		this.nicknames.forEach(
+			function (nick) {
+				echo ("\t"+that.name+"'s nick name contains: "+nick); //
+			}
+		); 
+	}
+}
+
+//alex.alias(); //Failure
+alex.alias2();
+alex.alias3();
+
+echo ("\n## Using Constructors :");
+function Person(name){
+	this.name = name || 'unknown'; //use default value instead of null/undefined.
+}
+var alex = new Person('alex');
+assert.equal(alex.name,'alex');
+echo("Every Object don't have prototype at first");
+assert.strictEqual(alex.prototype,undefined);
+echo("Every Fuction has a prototype object : ",Object.prototype.toString.call(Person.prototype));
+
+Person.prototype.sayHi = function() {
+	return "Hi "+this.name;
+};
+
+var dindin = new Person('DinDin');
+assert.equal(dindin.sayHi(),'Hi DinDin');
+assert.equal(Person.prototype.sayHi(),'Hi undefined'); //it's undefined
+assert.equal('Hi DinDin',Person.prototype.sayHi.call(dindin)); //OK
+[alex,dindin].forEach(
+	function (p) {
+		echo (p.sayHi());
+  		echo ("Object:",p,"is instanceof Person =>",p instanceof Person);
+  	}
+);
+assert.notEqual(alex,dindin);
+
+
+
 
 
 
