@@ -957,14 +957,18 @@ function toBase2String(number,length){
 }
 
 function test_buildin(name,variable) {
-	echo(format("%s is %s",name, typeof variable));
+	if (typeof variable === 'object'){
+		echo(name,"is a",Object.prototype.toString.call(variable)); 
+	} else {
+		echo(name,"is a",typeof variable);
+	}
 }
 
 function inspect(name,variable) {
 	if (typeof name != 'string') {
 		assert.fail(name,undefined,format("call inspect(name,variable) error, 'name' is '%s' and 'variable' is '%s'",name,variable))
 	}
-	console.log(format("The variable '%s' is a '%s' :",name,typeof variable),variable);
+	echo("The variable '",name,"' is a",Object.prototype.toString.call(variable));
 
 }
 
@@ -983,7 +987,7 @@ function assign(name, variable, value) {
     //petty print out for string	
 	if (typeof variable == 'string') { _var = "'"+variable+"'"}; 
 	if (typeof value == 'string') { _v = "'"+value+"'"}
-    console.log(format("The variable '%s' has been assign from %s to",name,_var),_v);
+    echo("The variable '",name,"' has been assign from",_var,"to",_v);
     variable = value;
 	return variable;
 }
