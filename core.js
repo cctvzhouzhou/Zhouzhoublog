@@ -1068,12 +1068,18 @@ prtH3("Test for instanceof");
     function D(){} // defining another constructor
 
     var o = new C();
+    
     echoInstanceOf(['o',o,'C',C]);
-    assert.equal(true,o instanceof C);  // true, because: Object.getPrototypeOf(o) === C.prototype
-    //echo("C.prototype", D.prototype === C.prototype? "==":"!=","D.prototype"); //
-    echoStrictEqual(['D.prototype',D.prototype,'C.prototype',C.prototype]);
-    echo(Object.getPrototypeOf(o));
+    assert.equal(true,o instanceof C);  // true, because: Object.getPrototypeOf(o) === C.prototype    
+
+    assert.equal(true,Object.getPrototypeOf(o) === C.prototype);
+    echoStrictEqual(["Object.getPrototypeOf(o)",Object.getPrototypeOf(o),"C.prototype",C.prototype]);
+   
     assert.equal(false,o instanceof D); // false, because D.prototype is nowhere in o's prototype chain
+
+    echoStrictEqual(['D.prototype',D.prototype,'C.prototype',C.prototype]);
+    assert.equal(false,D.prototype === C.prototype);
+
     o instanceof Object; // true, because:
     C.prototype instanceof Object // true
 
