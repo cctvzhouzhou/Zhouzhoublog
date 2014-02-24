@@ -1068,9 +1068,10 @@ prtH3("Test for instanceof");
     function D(){} // defining another constructor
 
     var o = new C();
-    echoIsInstance(o,C);
+    echoInstanceOf(['o',o,'C',C]);
     assert.equal(true,o instanceof C);  // true, because: Object.getPrototypeOf(o) === C.prototype
-    echo("C.prototype", D.prototype === C.prototype? "==":"!=","D.prototype"); //
+    //echo("C.prototype", D.prototype === C.prototype? "==":"!=","D.prototype"); //
+    echoStrictEqual(['D.prototype',D.prototype,'C.prototype',C.prototype]);
     echo(Object.getPrototypeOf(o));
     assert.equal(false,o instanceof D); // false, because D.prototype is nowhere in o's prototype chain
     o instanceof Object; // true, because:
@@ -1089,9 +1090,23 @@ o3 instanceof C; // true
 
 
 /////////////////////////////////////////
-function echoIsInstance(obj,type){
-    echo("echoIsInstance :",obj,obj instanceof type?"is an instance of":"is not a instance of",type);
+function echoInstanceOf(items){
+	echoCompareTwo(" 'isInstanceOf'",
+		{'result': items[1] instanceof items[3],
+		 'tstr'  : "is an instance of",
+		 'fstr'  : "is not an instance of"},items);
 }
+function echoStrictEqual(items){
+	echoCompareTwo("'isStrictEqual'",{'result':items[1] === items[3],'tstr':"===",'fstr':"!=="},items);
+}
+function echoCompareTwo(title,comp,items){
+	echo(title,":",items[0], comp.result ? comp.tstr:comp.fstr,items[2]);
+	echo(strByCount(" ",title.length),":",items[1], comp.result ? comp.tstr:comp.fstr,items[3]);
+}
+
+function passSign(sign){
+}
+
 /////////////////////////////////////////
 function toArray(arrayLikeObject) {
     return [].slice.call(arrayLikeObject); // [].slice.call -> arrayLikeObject now is the this point. 

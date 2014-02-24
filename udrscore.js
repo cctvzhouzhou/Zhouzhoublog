@@ -32,6 +32,32 @@ echo(changed);
 echo("Note:For Array, input.length === +input.length is always",input.length === +input.length );
 
 var input_o = {one:1, two:2, three:3};
-_.each(input_o,echo); // for js object , the parameters is value(1), key(one), list
+_.each(input_o,echo); // for js object , the parameters is value-1, key -> one, list->{one:1, two:2, three:3}
+
+echo(_.keys(input_o)); //get all keys
+
+//underscore use obj === Object(obj), so null is false. 
+test_isObject(null); //false
+test_isObject(undefined); //false
+test_isObject({}); //true , Function is object
+test_isObject([]); //true, Array is object.
+
+function test_isObject(obj){
+   echo("test_isObject :",obj,_.isObject(obj)?"is Object":"is not Object");
+}
+
+
+//Test saft referenced object
+var foo = function(obj) {
+    if (obj instanceof foo) return obj;
+    if (!(this instanceof foo)) return new foo(obj);
+    this._wrapped = obj;
+ };
+
+foo.VERSION = 2;
+echo(foo(foo(1)));
+echo(foo);
+
+
 
 
