@@ -1069,16 +1069,22 @@ prtH3("Test for instanceof");
 
     var o = new C();
     
-    echoInstanceOf(['o',o,'C',C]);
     assert.equal(true,o instanceof C);  // true, because: Object.getPrototypeOf(o) === C.prototype    
+    echoInstanceOf(['o',o,'C',C]);
 
     assert.equal(true,Object.getPrototypeOf(o) === C.prototype);
     echoStrictEqual(["Object.getPrototypeOf(o)",Object.getPrototypeOf(o),"C.prototype",C.prototype]);
+
+    //assert.equal(true,o.prototype instanceof C.prototype); //REF ERROR, o.prototype is undefined
    
     assert.equal(false,o instanceof D); // false, because D.prototype is nowhere in o's prototype chain
+    echoInstanceOf(['o',o,'D',D]);
 
-    echoStrictEqual(['D.prototype',D.prototype,'C.prototype',C.prototype]);
+    assert.equal(false,Object.getPrototypeOf(o) === D.prototype);
+    echoStrictEqual(["Object.getPrototypeOf(o)",Object.getPrototypeOf(o),"D.prototype",D.prototype]);
+ 
     assert.equal(false,D.prototype === C.prototype);
+    echoStrictEqual(['D.prototype',D.prototype,'C.prototype',C.prototype]);
 
     o instanceof Object; // true, because:
     C.prototype instanceof Object // true
