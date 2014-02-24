@@ -599,8 +599,8 @@ function foo(){
     };
     return b;
 }
-f = foo();
-f();
+f = foo(); //TODO, Dangerous operation, foo method may hoisting from other, which dont' return a funtion, then f() will failed
+f();    
 
 echo("\n## Using 'arguments' variable :")
 echo("-------------------------------")
@@ -785,8 +785,8 @@ var extracted = alex.whois;
 
 //echo(extracted()); //a TypeError here, Cannot read property 'name' of undefined 
 
-this.name = "Just show A bug here, please don't use it"
-echo(extracted.call(this)); //when there is a 'name' property in 'this', then call successed.
+var argThis = {name : "Just show A bug here, please don't use it" };
+echo(extracted.call(argThis)); //when there is a 'name' property in 'this', then call successed.
 
 prtH2("Using bind() to extract method with a given 'this'"); 
 //The bind() method creates a new function that, when called, 
@@ -888,9 +888,6 @@ assert.equal('Hi DinDin',Person.prototype.sayHi.call(dindin)); //OK
     }
 );
 
-
-
-
 prtH2("Test RegExp");
 var r = /^abc[0-9]$/
 inspect(r.toString(),r);
@@ -900,6 +897,129 @@ assert.equal(r.test('abc'),false);
 );
 
 
+
+
+///////////////////////////////////////////
+// Hosting tests 
+prtH1("Hoisting ...")
+prtH2('var hoisting...')
+var x = 1; //(*)
+assert.equal(1,x,"I am 1 now");
+if (true) { //if statements, do not create a new scope. Only functions create a new scope.
+    var x = 2; //(**)
+    assert.equal(2,x,"I am 2 now");
+}
+assert.equal(2,x,"I am still 2"); // 2
+
+//In JavaScript, a variable can be declared after being used, 
+//Within its current scope, regardless of where a variable is declared, it will be, behind the scenes, hoisted to the top. 
+//so (*) and (**) will hosited their var declar just like:
+// var x
+// x = 1;
+// if (true){
+//    x = 2
+// }
+// echo(x) //it's 2
+
+prtH2('function hoisting...');
+(function(){
+    assert.equal(typeof foo123,'function'); // foo123 is function, and link to the last function named foo123; and 
+    assert.equal(typeof foo1234,'undefined') //foo1234 is undefined, becuase not any define found.
+    foo1234 = foo123; //foo1234 is the hosited variable and link to a function. 
+    var foo1234;
+    assert.equal(typeof foo1234,'function');
+    function foo123(){
+
+         echo("I am foo()");
+    }
+    function foo123(){
+        echo("I am foo() hoisted");
+    }
+    foo123 = 1;
+    assert.equal(typeof foo123, 'number'); //foo123 is number now.
+    //the literal in Javascript will try to auto bind the hoisted one, if there is not any assignment.
+
+}).call(this);
+
+/////////////////////////////////////////
+// this tests
+prtH1("What's 'this' exactually?")
+
+prtH2("");
+
+echo("In gloabl, this is just a",this,",aka, a empty object!"); //a empty object
+var f = function() {
+    echo("In function, this is",this); //it's undefined.
+}
+f(); // this is undefined
+f.call(this); // this is {}
+f.call({name:'test'}); // this is {name:'test'}
+
+prtH2("Test (function).call(this)");
+
+(function(){
+    echo("inside ().call(this)");
+    f.call(this);
+    echo(this);
+}).call(this);
+
+prtH2("Test (function).call()");
+
+(function(){
+    echo("inside ().call()");
+    f.call(this);
+    echo(this);
+}).call();
+
+prtH2("Test wrapped object protected")
+
+var foo = function(obj) {
+    echo("enter foo(), input =",obj, "this =",this);
+    if (obj instanceof foo) {
+        echo("obj=",obj,"return obj");
+        return obj;
+    }
+    if (!(this instanceof foo)) {
+        echo("this=",this,"obj=",obj,"now new foo(obj)");
+        return new foo(obj); //recursion -> here, and this ->  
+    }
+    echo("this=",this,"now set the wrapped");
+    this._name = "foo("+obj+")";
+    this._wrapped = obj;
+};
+
+var foo2 = function(obj) {
+    if (this === undefined) {
+        return new foo2(obj);
+    }else if (obj instanceof foo2){
+        return obj;
+    }
+    this._name = "foo2("+obj+")";
+    this._wrapped = obj;
+}
+var foo1 = foo(1);
+echo(foo1);
+var foo1fromNew = new foo(1);
+echo(foo1fromNew);
+prtL();
+echo(foo2(1));
+echo(new foo2(1));
+
+prtH2("What's 'new' and do with 'this'");
+var foo3 = function(obj) {
+    echo("Inside foo3(), this is",this);
+}
+//A function always returns a value. If the returnvalue is not specified, thenundefined
+//is returned.
+var withoutNew = foo3();
+var fromNew = new foo3();
+
+
+
+//If the function was invoked with the new prefix and the return value is not an object,
+//then this (the new object) is returned instead.
+
+/////////////////////////////////////////
 function toArray(arrayLikeObject) {
     return [].slice.call(arrayLikeObject); // [].slice.call -> arrayLikeObject now is the this point. 
 }
@@ -1014,16 +1134,75 @@ function prtH2(title){
 function prtH3(title){
     prtH("### "+title,{startbar:false,endbar:false});
 }
+function prtL(char){
+    var _char = char || "-";
+    prtH("",{seperator:_char,startbar:true,endbar:false});
+}
+
+(function(){
+    echo("Boolean(true) is",Boolean(true));
+    echo("Boolean(true) is",Boolean(false));
+    echo("Boolean('true') is",Boolean('true')); 
+    echo("Boolean('false') is",Boolean('false')); //!!! True!!!
+    [null,undefined,'',true,false,'true','false',"hello word"].forEach(
+        function(input){
+            echo("type is",Object.prototype.toString.call(input),"input is",input);
+            x = y = (input === true || input === 'true'); //default is false
+            echo("x =",x,"y =",y);  //(1)
+            x = y = undefined;
+            x = y = true // default is true
+            if (input === false || input === 'false'){
+                x = y = false; //"hello world breaks"
+            }
+            echo("x =",x,"y =",y);   //(2)
+            x = y = false //defalt is false
+            if (input === true  || input === 'true' ){
+                x = y = true;
+                //default is true, but not for the 'hello workd'
+            }
+            echo("x =",x,"y =",y);   //(3)
+            x = y = undefined;
+            x = y = (!(input === false || input === 'false' || input !== 'true')); //default is true
+            echo("x =",x,"y =",y);   //(4)
+
+            //default is false, => only when true and true
+            //default is true, => only when false and 'false'
+
+            x = y = true;
+            if (input === false) x = y = false;
+             echo("x =",x,"y =",y);   //(5)
+            x = y = false;
+            if (input === true) x = y = true;
+            echo("x =",x,"y =",y);   //(6)
+
+            x = y = undefined;
+            x = input === true;
+            y = !(input === false);
+            echo("x =",x,"y =",y);   //(7)
+
+
+
+    });
+})//();
+
 
 function prtH(title,options){
     var _length = options.length || 50;
     var _sptr = options.seperator || '=';
-    var _center = options.center || false;
-    var _startbar = options.startbar || true;
-    var _endbar = options.endbar || true;
-    if (_startbar) { echo(strByCount(_sptr,_length)); }
-    if (_center)   { echo(strCenter(title,_length)); } else echo(title);
-    if (_endbar)   { echo(strByCount(_sptr,_length)); }
+    var _center   = false; if (options.center === true) _center = true;
+    var _startbar = true ; if (options.startbar === false) _startbar = false; //NOTICE, the || trick not work for real boolean true,
+    var _endbar   = true ; if (options.endbar === false) _endbar = false;
+    if (_startbar) {
+        echo(strByCount(_sptr,_length)); 
+    }
+    if (_center) { 
+        echo(strCenter(title,_length));
+    } else if (title.length>0){ // don't print empty str
+        echo(title);
+    }
+    if (_endbar) { 
+        echo(strByCount(_sptr,_length)); 
+    }
 }
 //TODO, remove the testing statements from the function 
 var _sptr = "-"
