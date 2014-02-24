@@ -971,54 +971,127 @@ prtH2("Test (function).call()");
     echo(this);
 }).call();
 
+prtH2("What's 'new' and do with 'this'");
+var foo3 = function() {
+    echo("Inside foo3(), 'this' is",this);
+    echo("foo3() return nothing");
+}
+//A function always returns a value. If the returnvalue is not specified, then undefined
+//is returned.
+var withoutNew = foo3(); //undefined
+//If the function was invoked with the new prefix and the return value is not an object,
+//then this (the new object) is returned instead.
+var fromNew = new foo3(); 
+assert.strictEqual(withoutNew,undefined);
+echo("we got a",withoutNew,"from foo3()")
+echo("we got a",fromNew,"from new foo3()");
+
+prtL();
+//but if the function has return, we got the return.
+var foo4 = function(){
+    echo("Inside foo4(),'this' is",this);
+    var obj = {name:"foo4"};
+    echo("foo4() return a object",obj);
+    return obj;
+}
+withoutNew = foo4();
+fromNew = new foo4();
+echo("we got a",withoutNew,"from foo4()");
+echo("we got a",fromNew,"from new foo4()");
+
 prtH2("Test wrapped object protected")
 
 var foo = function(obj) {
-    echo("enter foo(), input =",obj, "this =",this);
+    echo("Enter foo(), obj =",obj, "this =",this);
+    echo("obj =",obj,obj instanceof foo?"is":"is not","an instane of foo.");
     if (obj instanceof foo) {
         echo("obj=",obj,"return obj");
         return obj;
     }
+    echo("this =",this,this instanceof foo?"is":"is not","an instance of foo.");
     if (!(this instanceof foo)) {
-        echo("this=",this,"obj=",obj,"now new foo(obj)");
-        return new foo(obj); //recursion -> here, and this ->  
+        echo("this =",this,"obj=",obj,"now try to new a foo(",obj,")");
+        return new foo(obj); //recursion -> here, and this is a {}, when obj inside  
     }
-    echo("this=",this,"now set the wrapped");
+    echo("this=",this,"now set the wrappeds");
     this._name = "foo("+obj+")";
     this._wrapped = obj;
 };
 
+prtH3("test for foo(1)");
+var foo1 = foo(1);
+echo(foo1);
+
+prtH3("test for new foo(1)");
+var foo1fromNew = new foo(1);
+echo(foo1fromNew);
+
+prtH3("test for new foo(foo1)");
+var foo1fromfoo1 = foo(foo1);
+echo(foo1fromfoo1);
+assert.strictEqual(foo1fromfoo1,foo1);
+
 var foo2 = function(obj) {
+    echo("Enter foo2(), obj =",obj, "this =",this);
+    echo("this =",this, this === undefined? "is a":"is not a", undefined);
+    echo("obj =",obj, obj instanceof foo2? "is a instance of":"is not a instance of",'foo2');
     if (this === undefined) {
+        echo("try to new a foo2(",obj,"), then return it.");
         return new foo2(obj);
     }else if (obj instanceof foo2){
+        echo("return obj =",obj);
         return obj;
     }
+    echo("try to set wrappered prepteris");
     this._name = "foo2("+obj+")";
     this._wrapped = obj;
 }
-var foo1 = foo(1);
-echo(foo1);
-var foo1fromNew = new foo(1);
-echo(foo1fromNew);
-prtL();
-echo(foo2(1));
-echo(new foo2(1));
 
-prtH2("What's 'new' and do with 'this'");
-var foo3 = function(obj) {
-    echo("Inside foo3(), this is",this);
+prtH3("test for foo2(1)");
+var foo2_1 = foo2(1);
+echo(foo2_1);
+
+prtH3("test for new foo2(1)");
+var foo2_n1 = new foo2(1);
+echo(foo2_n1);
+
+prtH3("test for foo2(foo2(1))");
+var foo2_foo2_1 = foo2(foo2_1);
+echo(foo2_foo2_1);
+assert.strictEqual(foo2_foo2_1,foo2_1);
+
+
+prtH3("Test for instanceof");
+(function() {
+    echo("The 'instanceof' tests presence of constructor's 'prototype' in object prototype chain.");
+    function C(){} // defining a constructor
+    function D(){} // defining another constructor
+
+    var o = new C();
+    echoIsInstance(o,C);
+    assert.equal(true,o instanceof C);  // true, because: Object.getPrototypeOf(o) === C.prototype
+    echo("C.prototype", D.prototype === C.prototype? "==":"!=","D.prototype"); //
+    echo(Object.getPrototypeOf(o));
+    assert.equal(false,o instanceof D); // false, because D.prototype is nowhere in o's prototype chain
+    o instanceof Object; // true, because:
+    C.prototype instanceof Object // true
+
+C.prototype = {};
+var o2 = new C();
+o2 instanceof C; // true
+o instanceof C; // false, because C.prototype is nowhere in o's prototype chain anymore
+
+D.prototype = new C(); // use inheritance
+var o3 = new D();
+o3 instanceof D; // true
+o3 instanceof C; // true
+})();
+
+
+/////////////////////////////////////////
+function echoIsInstance(obj,type){
+    echo("echoIsInstance :",obj,obj instanceof type?"is an instance of":"is not a instance of",type);
 }
-//A function always returns a value. If the returnvalue is not specified, thenundefined
-//is returned.
-var withoutNew = foo3();
-var fromNew = new foo3();
-
-
-
-//If the function was invoked with the new prefix and the return value is not an object,
-//then this (the new object) is returned instead.
-
 /////////////////////////////////////////
 function toArray(arrayLikeObject) {
     return [].slice.call(arrayLikeObject); // [].slice.call -> arrayLikeObject now is the this point. 
@@ -1126,13 +1199,19 @@ function assign(name, variable, value) {
 }
 
 function prtH1(title){
+    echo();
     prtH(title,{seperator:'=',center:true,});
+    echo();
 }
 function prtH2(title){
+    echo();
     prtH("## "+title,{seperator:'-'});
+    echo();
 }
 function prtH3(title){
+    echo();
     prtH("### "+title,{startbar:false,endbar:false});
+    echo();
 }
 function prtL(char){
     var _char = char || "-";
