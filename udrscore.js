@@ -1,5 +1,6 @@
 'use strict'; //strict mode 
 var _ = require("underscore");
+var assert = require("assert");
 var echo = console.log;
 
 //3 parameters pass into echo : obj[i], i , obj aka. 1, 0, [1,2,3] 
@@ -57,6 +58,10 @@ var foo = function(obj) {
 foo.VERSION = 2;
 echo(foo(foo(1)));
 echo(foo);
+
+assert.equal(true,Object.getPrototypeOf(_([1,2,3]))===_.prototype);
+assert.equal(true,_() instanceof _);
+
 
 
 

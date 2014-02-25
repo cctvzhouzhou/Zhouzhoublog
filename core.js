@@ -986,6 +986,9 @@ assert.strictEqual(withoutNew,undefined);
 echo("we got a",withoutNew,"from foo3()")
 echo("we got a",fromNew,"from new foo3()");
 
+assert.equal(true,Object.getPrototypeOf(fromNew)===foo3.prototype);
+assert.equal(true,fromNew instanceof foo3);
+
 prtL();
 //but if the function has return, we got the return.
 var foo4 = function(){
@@ -1004,12 +1007,16 @@ prtH2("Test wrapped object protected")
 var foo = function(obj) {
     echo("Enter foo(), obj =",obj, "this =",this);
     echo("obj =",obj,obj instanceof foo?"is":"is not","an instane of foo.");
-    if (obj instanceof foo) {
+    if (obj instanceof foo) { // I am a foo already, return directly!
         echo("obj=",obj,"return obj");
         return obj;
     }
     echo("this =",this,this instanceof foo?"is":"is not","an instance of foo.");
-    if (!(this instanceof foo)) {
+    if (!(this instanceof foo)) { //this not a foo 
+        //1. 'this' is 'undefined',              by 'foo(wrappedObj)' or 'foo.call(undefined,wrappedObj)' 
+        //2. 'this' is a object, but not a foo.  by 'foo.call(not-a-foo,wrappedObj)'
+        //any case, just recursion a new foo(wrappedObjt) call -> this time, 'this' instanceof foo -> true, 
+        //then this._wrapped is set to wrappedObj, and return.  
         echo("this =",this,"obj=",obj,"now try to new a foo(",obj,")");
         return new foo(obj); //recursion -> here, and this is a {}, when obj inside  
     }
@@ -1030,6 +1037,11 @@ prtH3("test for new foo(foo1)");
 var foo1fromfoo1 = foo(foo1);
 echo(foo1fromfoo1);
 assert.strictEqual(foo1fromfoo1,foo1);
+
+prtH3("test for foo.call({},1)");
+var foo1_with_call = foo.call({},1);
+echo(foo1_with_call);
+assert.strictEqual(foo1_with_call._wrapped,1);
 
 var foo2 = function(obj) {
     echo("Enter foo2(), obj =",obj, "this =",this);
@@ -1060,6 +1072,9 @@ var foo2_foo2_1 = foo2(foo2_1);
 echo(foo2_foo2_1);
 assert.strictEqual(foo2_foo2_1,foo2_1);
 
+var foo2_with_call = foo2.call({},1); //broken!
+echo(foo2_with_call); //it's undefined now.
+
 
 prtH3("Test for instanceof");
 (function() {
@@ -1071,7 +1086,6 @@ prtH3("Test for instanceof");
     
     assert.equal(true,o instanceof C);  // true, because: Object.getPrototypeOf(o) === C.prototype    
     echoInstanceOf(['o',o,'C',C]);
-
     assert.equal(true,Object.getPrototypeOf(o) === C.prototype);
     echoStrictEqual(["Object.getPrototypeOf(o)",Object.getPrototypeOf(o),"C.prototype",C.prototype]);
 
@@ -1079,11 +1093,10 @@ prtH3("Test for instanceof");
    
     assert.equal(false,o instanceof D); // false, because D.prototype is nowhere in o's prototype chain
     echoInstanceOf(['o',o,'D',D]);
-
     assert.equal(false,Object.getPrototypeOf(o) === D.prototype);
     echoStrictEqual(["Object.getPrototypeOf(o)",Object.getPrototypeOf(o),"D.prototype",D.prototype]);
  
-    assert.equal(false,D.prototype === C.prototype);
+    assert.equal(false,D.prototype === C.prototype); //D.prototype !== C.prototype
     echoStrictEqual(['D.prototype',D.prototype,'C.prototype',C.prototype]);
 
     o instanceof Object; // true, because:
