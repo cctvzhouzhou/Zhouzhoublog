@@ -121,6 +121,9 @@ function compareDeep(object,matches,key){
         var match = matches.stack.shift();
         //echo(actualKey,actual,matches,match);
         if (match === undefined){
+            if (object) {
+                echo('WARNING: no more match in your testbed, but comparion not finished, untested {',key,":",object,"}");
+            }
             return //no more match , exit;
         }
         var expect = match.expect;
