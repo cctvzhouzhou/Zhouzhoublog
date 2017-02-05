@@ -1,0 +1,4 @@
+# let git to ignore symlinks
+# find . -type l | sed -e s'/^\.\///g' >> .gitignore
+#
+2016-02-16-weixin-public-account.markdown
