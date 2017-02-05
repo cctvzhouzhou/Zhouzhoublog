@@ -2,7 +2,7 @@
 layout: post
 title:  "Step by step blogging guide by using GitHub Pages and Jekyll"
 date:   2017-02-05 14:00
-categories: Technical Guide 
+categories: jekyll 
 uthor:
   name: Alex Wu 
   url: http://twitter.com/yidingwu
@@ -43,6 +43,8 @@ go to your_repo 'Settings'->'GitHub Pages' section
 
 ### How to use jekyll
 
+1. Install and run jekyll 
+
 ```
  $ gem install jekyll bundler
  ~ $ jekyll new my-awesome-site
@@ -50,6 +52,8 @@ go to your_repo 'Settings'->'GitHub Pages' section
  ~/my-awesome-site $ bundle exec jekyll serve
 # => Now browse to http://localhost:4000
 ```
+
+2. Create an new post 
 
 You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated.
 
@@ -64,6 +68,15 @@ end
 print_hi('Tom')
 #=> prints 'Hi, Tom' to STDOUT.
 {% endhighlight %}
+
+3. Change default Theme
+
+by default, jekyll use the `minima` theme
+```
+$ bundle show |grep minima
+  * minima (2.1.0)
+```
+
 
 Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll’s GitHub repo][jekyll-gh]. If you have questions, you can ask them on [Jekyll Talk][jekyll-talk].
 
