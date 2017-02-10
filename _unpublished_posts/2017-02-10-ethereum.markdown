@@ -1,0 +1,56 @@
+---
+layout: post
+title: ethereum notes 
+date: 2017-02-10 12:00
+comments: true
+external-url:
+categories: ethereum 
+---
+
+### Mining note
+
+http://ethereum.stackexchange.com/a/4469
+
+geth saves its internal states for the main network in the chaindata directory. You can find it in the directory:
+
+```
+~/.ethereum on linux
+~/Library/Ethereum on OS X
+~/AppData/Roaming/Ethereum
+```
+
+It uses the LevelDB database. You can save this directory only if geth is stopped to prevent corruptions. The data is portable on Linux, Windows and MacOS X (i have checked). But you have to remember that it is not a safe way. Do not use a chaindata archives provided by anonymous. The transactions are not checked! When geth starts, it checks all the files are present. If a .ldb file misses, the chaindata directory is corrupted and you have to remove this directory!
+
+geth import and export is safe but slow because all transactions are checked and the operation is the same as geth without the --fast flag. On my 3720qm, it is 5h and 19Go disk storage used. The only economy is the network download (1.5Go). It is faster to do a geth --fast!
+
+On my intel 3720qm mac mini (1Gbit/s), some benchs geth 1.4:
+
+__________________________________________________
+| Operation   | Disk Used | Time | Disk Written  |
+|-------------|-----------|------|---------------|
+| geth        | 19.Go     | 5h00 | 1To           |
+| geth import | 19.Go     | 4h50 | 1To           |
+| geth --fast | 3.7Go     | 1h00 | 100Go         |
+--------------------------------------------------
+On my intel 3720qm mac mini (1Gbit/s), some benchs geth 1.5 (in dev):
+
+__________________________________________________
+| Operation   | Disk Used | Time | Disk Written  |
+|-------------|-----------|------|---------------|
+| geth --fast | 3.8Go     | 17m  | 25Go          |
+| geth        | 19Go      | 2h   | 100Go         |
+--------------------------------------------------
+Conclusion:
+
+i uses chaindata archives only between my computers.
+import is very slow, check all and saves all states.
+geth --fast is faster and saves only current states.
+
+
+#### DAG place
+
+The Ethash DAG is stored at ~/.ethash (Mac/Linux) or ~/AppData/Ethash (Windows) so that it can be reused by all clients. You can store this in a different location by using a symbolic link.
+
+#### P
+
+--fast and --cache 
