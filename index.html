@@ -53,7 +53,7 @@ layout: default
       {% for category in categories %}
       <h3>On {{ category | first }}</h3>
       <p>{% for posts in category %} {% for post in posts %}
-      <p>{{ post.date | date: "%B %-d, %Y" }}  <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a> </p> {% endfor %}{% endfor %}  </p>
+      <p>{{ post.date | date: "%Y-%m-%d " }}  <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a> </p> {% endfor %}{% endfor %}  </p>
       {% endfor %}
     </div>
   </div>

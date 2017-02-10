@@ -2,3 +2,5 @@
 # find . -type l | sed -e s'/^\.\///g' >> .gitignore
 #
 2016-02-16-weixin-public-account.markdown
+2017-02-10-ethereum.markdown
+2017-02-10-set_theory.markdown
