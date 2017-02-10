@@ -40,6 +40,17 @@ tag: set
 
 ###  Set Theory Basic
 
+基础知识
+
+
+### Inclusion–exclusion principle
+
+容斥原理 
+
+[Wikipedia: Inclusion–exclusion principle ][2.1]
+
+[2.1]:https://en.wikipedia.org/wiki/Inclusion%E2%80%93exclusion_principle
+
 
 ##  References 
 
