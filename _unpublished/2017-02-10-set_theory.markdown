@@ -24,11 +24,12 @@ tag: set
 | `\in`             | $$ a \in A         $$ | a属于A element of|
 | `\notin`          | $$ a \notin A      $$ | 不属于  |
 | `\ni`             | $$ \ni             $$ | 也能用`\owns`|
+| `\varnothing`     | $$ \varnothing     $$ | 空集 |
 | `\subset`         | $$ A \subset B     $$ | A是B的子集        |
 | `\subseteq`       | $$ A \subseteq B   $$ | A是B的子集（一般用这个）|
 | `\subsetneq`      | $$ A \subsetneq B  $$ | A是B的真子集 proper subset |
-| `\supset`         | $$ B \supset A     $$ | B包含A include | 
-| `\supseteq`       | $$ B \supseteq A   $$ | B包含A（一般用这个）|
+| `\supset`         | $$ B \supset A     $$ | B包含A  | 
+| `\supseteq`       | $$ B \supseteq A   $$ | B包含A（一般用这个）include|
 | `\supsetneq`      | $$ B \supsetneq A  $$ | B真包含A |
 | `\cap`            | $$ A \cap B        $$ | A与B的交集，A交B Intersection |
 | `\cup`            | $$ A \cup B        $$ | A与B的并集，A并B Union|
