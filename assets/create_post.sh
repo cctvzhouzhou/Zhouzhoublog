@@ -4,13 +4,19 @@ NAME=$1
 : ${CAT:="blockchain mathematics algorithm"}
 : ${TAG:="blockchain algorithm kubernetes openshift openstack docker golang"}
 : ${POST_DIR:="../_posts"}
-: ${WORK_DIR:="../_unpublished"}
+: ${DRAFT_DIR:="../_drafts"}
 
-file_name="`date "+%Y-%m-%d"`-${NAME}.markdown"
+# Notice : 
+#   we might not need to add date prefix for _draft post, the jekyll will try
+#   to compelete it automatically
+# Reference:
+#   https://jekyllrb.com/docs/drafts/
+#file_name="`date "+%Y-%m-%d"`-${NAME}.markdown"
+file_name="${NAME}.markdown"
 
-if [ ! -f ${WORK_DIR}/${file_name} ]; then
-  echo "create new post [${NAME}]: ${WORK_DIR}/${file_name}"
-cat <<- EOF > ${WORK_DIR}/${file_name} 
+if [ ! -f ${DRAFT_DIR}/${file_name} ]; then
+  echo "create new post [${NAME}]: ${DRAFT_DIR}/${file_name}"
+cat <<- EOF > ${DRAFT_DIR}/${file_name} 
 ---
 
 layout: post
@@ -29,10 +35,6 @@ tag: ${TAG}
 EOF
   echo "done!"
 else
-  echo "post: ${WORK_DIR}/${file_name} exists!"
+  echo "post: ${DRAFT_DIR}/${file_name} exists!"
 fi
 
-echo  "link: ${POST_DIR}/${file_name} => ${WORK_DIR}/${file_name}"
-ln -s ${WORK_DIR}/${file_name} ${POST_DIR}/${file_name}
-
-echo "${file_name}" >> ${POST_DIR}/.gitignore 
