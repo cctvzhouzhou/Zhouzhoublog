@@ -11,4 +11,8 @@ twitter_username: yidingwu
 github_username: dindinw
 
 # Build settings
-markdown: kramdown
+# markdown: kramdown
+markdown: redcarpet
+redcarpet:
+        extensions: ["no_intra_emphasis", "tables", "autolink", "strikethrough", "with_toc_data"]
+

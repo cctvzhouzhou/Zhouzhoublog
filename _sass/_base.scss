@@ -87,6 +87,11 @@ article {
   code {
     font-family: $mono-font-family;
   }
+
+  mark {
+      background-color: $marker-bg-color ;
+      color: $marker-text-color;
+  }
 }
 
 blockquote {

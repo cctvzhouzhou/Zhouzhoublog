@@ -9,7 +9,9 @@ categories: ethereum
 
 ### Mining note
 
-http://ethereum.stackexchange.com/a/4469
+* http://ethdocs.org/en/latest/mining.html
+* https://github.com/ethereum/go-ethereum/wiki/Minin://github.com/ethereum/go-ethereum/wiki/Mining
+* http://ethereum.stackexchange.com/a/4469
 
 geth saves its internal states for the main network in the chaindata directory. You can find it in the directory:
 
@@ -25,21 +27,19 @@ geth import and export is safe but slow because all transactions are checked and
 
 On my intel 3720qm mac mini (1Gbit/s), some benchs geth 1.4:
 
-__________________________________________________
 | Operation   | Disk Used | Time | Disk Written  |
 |-------------|-----------|------|---------------|
 | geth        | 19.Go     | 5h00 | 1To           |
 | geth import | 19.Go     | 4h50 | 1To           |
 | geth --fast | 3.7Go     | 1h00 | 100Go         |
---------------------------------------------------
+
 On my intel 3720qm mac mini (1Gbit/s), some benchs geth 1.5 (in dev):
 
-__________________________________________________
 | Operation   | Disk Used | Time | Disk Written  |
 |-------------|-----------|------|---------------|
 | geth --fast | 3.8Go     | 17m  | 25Go          |
 | geth        | 19Go      | 2h   | 100Go         |
---------------------------------------------------
+
 Conclusion:
 
 i uses chaindata archives only between my computers.
@@ -59,7 +59,7 @@ The Ethash DAG is stored at ~/.ethash (Mac/Linux) or ~/AppData/Ethash (Windows) 
 
 Run the following command in your syncing node to create a list of admin.addPeer(...) commands that you can paste into your non-syncing node:
 
-```
+```javascript
 function getPeers() {
   admin.peers.forEach( function(e) {
     console.log("admin.addPeer('enode://" + 
@@ -73,10 +73,40 @@ getPeers();
 
 Running the command above will create the following list of  admin.addPeer(...) commands that you can paste into your geth console or geth attach command line to start your non-syncing geth node syncing:
 
-```
+```javascript
 admin.addPeer('enode://1118980bf48b0a3640bdba04e0fe78b1add18e1cd99bf22d53daac1fd9972ad650df52176e7c7d89d1114cfef2bc23a2959aa54998a46afcf7d91809f0855082@52.74.57.123:30303');
 admin.addPeer('enode://2690cb1b0e18318a739b128420d7a6985ad358e7f796113d2c84329a53680d47eb5b69f65d6ad04f13ba40cec53f9a2dfd935e516900af4e8bd351cfd200cfe4@114.215.236.112:30303');
 admin.addPeer('enode://2dda05c68696a92945094fa8590a123d382128b24919f3805034c67f3aa3e6c0524907028d230b78abf6449f75a44465d4ffde3becc2693afdaa65fd834d04de@54.197.15.53:30303');
 admin.addPeer('enode://61d87a1d7c6dd16eb1493f39edc35c0b1251d073b7dfc55904763716e0ebb6010af4a84cc0ec9bfcd8725becea957572de40def07d68a6e4b0c83da2fa757aef@121.144.192.63:30303');
 admin.addPeer('enode://6eb61fa67b147e73a587a8c2d2f65477c2ccfb500657d1e86fca2d9737afc9ba368d776dd1d52a4c5fb4a65b942157ee58c6b4bf45af1c390bdd6e9f3ebbe770@88.99.69.38:30303');
 ```
+
+
+### Why cpp-ethereum don't support OpenCL (GPU mining) any more?
+
+https://github.com/ethereum/cpp-ethereum/issues/3528
+
+https://github.com/ethereum/homebrew-ethereum/commit/f417131e37b6d08c4aa03c4b388710946ff0e820
+
+
+The aternative repo to support GPU mining
+https://github.com/Genoil/cpp-ethereum
+
+The lastest minding doc
+http://ethdocs.org/en/latest/mining.html
+
+Question asked here
+https://github.com/ethereum/cpp-ethereum/issues/3538
+
+Some discuss here
+https://gitter.im/ethereum/cpp-ethereum
+
+
+### Aboout Pool 
+
+[dwarfpool](http://dwarfpool.com/faq/)
+
+[nanopool](https://eth.nanopool.org/help)
+
+[fishpool](https://www.f2pool.com/help)
+

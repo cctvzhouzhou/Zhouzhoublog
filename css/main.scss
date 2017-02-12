@@ -51,6 +51,13 @@ $alt-text-color:   darken($article-bg-color, 60%);
 
 $subdued-border:   rgba($bg-color-darker, 0.5);
 
+// for marker 
+
+// $marker-bg-color   : #E9FBE9;
+// $marker-text-color : black;
+$marker-bg-color   : rgb(173,207,214);
+$marker-text-color : $text-color;
+
 // Import partials from `sass_dir` (defaults to `_sass`)
 @import
   "base",
