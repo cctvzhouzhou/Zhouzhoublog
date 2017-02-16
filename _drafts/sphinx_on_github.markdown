@@ -100,12 +100,20 @@ pip install django-celery==3.1.16`
 ```
 
 a private hosted docker images to reference
+
 * https://github.com/vassilvk/readthedocs-docker
 
-
+[Read the Docs Sphinx Theme](https://github.com/snide/sphinx_rtd_theme)
 
 ## Note for acsii doc
 
-http://www.asciibinder.org/index.html
-https://github.com/redhataccess/ascii_binder
-https://github.com/openshift/openshift-docs
+[AsciiDoc Writer’s Guide](http://asciidoctor.org/docs/asciidoc-writers-guide/)
+
+[What is AsciiBinder?](http://www.asciibinder.org/index.html)
+
+AsciiBinder is an AsciiDoc-based system for authoring and publishing closely related documentation sets from a single source.
+
+[AsciiBinder on Github](https://github.com/redhataccess/ascii_binder)
+
+
+The AsciiBinder system was initially developed for [OpenShift documentation](https://github.com/openshift/openshift-docs)
