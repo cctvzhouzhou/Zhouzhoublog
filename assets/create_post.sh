@@ -1,10 +1,11 @@
 NAME=$1
+dir=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
 
 : ${NAME:="my_post"}
 : ${CAT:="blockchain mathematics algorithm"}
 : ${TAG:="blockchain algorithm kubernetes openshift openstack docker golang"}
-: ${POST_DIR:="../_posts"}
-: ${DRAFT_DIR:="../_drafts"}
+: ${POST_DIR:="${dir}/../_posts"}
+: ${DRAFT_DIR:="${dir}/../_drafts"}
 
 # Notice : 
 #   we might not need to add date prefix for _draft post, the jekyll will try
