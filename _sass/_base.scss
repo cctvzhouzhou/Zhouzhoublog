@@ -1,12 +1,14 @@
 body {
-  -webkit-text-size-adjust: 100%;
-  -webkit-font-smoothing: antialiased;
+ /* don't use anti-alised don't know reason why is better to disable it */
+ // -webkit-text-size-adjust: 100%;
+ // -webkit-font-smoothing: antialiased;
   -moz-font-feature-settings: "kern", "liga=1, dlig=1", "salt";
   -ms-font-feature-settings: "kern", "liga", "dlig", "salt";
   -webkit-font-feature-settings: "kern", "liga", "dlig", "salt";
   -o-font-feature-settings: "kern", "liga", "dlig", "salt";
   font-feature-settings: "kern", "liga", "dlig", "salt";
   text-rendering: optimizeLegibility;
+
 
   background-color: $background-color;
   font-family: $base-font-family;
@@ -38,12 +40,18 @@ body {
 
   h1 {
     font-weight: 600;
+    font-variant: small-caps;
+    color: $alt-color;
   }
 
   h2 {
     margin-top: 1em;
     font-size: 1.6em;
     margin-bottom: 0.6em;
+    font-variant: small-caps;
+    font-weight: bold;
+    letter-spacing: 0.1em;
+    color: $alt-color;
   }
 
   h3 {
@@ -52,6 +60,7 @@ body {
     text-transform: lowercase;
     font-weight: bold;
     letter-spacing: 0.15em;
+    color: $alt-color;
   }
 }
 
@@ -76,7 +85,7 @@ article {
   }
 
   pre, code {
-    background-color: $background-color;
+      background-color: $code-bg-color;
   }
 
   pre {
@@ -86,6 +95,7 @@ article {
 
   code {
     font-family: $mono-font-family;
+	font-size: $code-font-size;
   }
 
   mark {
@@ -211,9 +221,19 @@ table {
   padding-top: 0.5em;
   padding-bottom: 0.5em;
   border-collapse: separate;
-  background-color: $background-color;
   border-left: 2.5pt solid $alt-color;
+  background-color: $code-bg-color;
 
+  thead {
+    color:$alt-color;
+  }
+
+  tbody {
+    font-size: 0.875em; //14px
+    //color: darken($alt-color,15%); //if  darken the blue 
+    color: lighten($text-color,25%); //if lighten the black 
+  }
+  
   td, th {
     display: table-cell;
     vertical-align: inherit;
@@ -224,6 +244,6 @@ table {
 
   th {
     padding-bottom: 0.6em;
-    // border-bottom: 2px solid $alt-color;
+    //border-bottom: 2px solid $alt-color;
   }
 }

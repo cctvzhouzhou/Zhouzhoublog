@@ -6,45 +6,21 @@
 // Our variables
 $base-font-family: 'PT Serif', Georgia, Times, 'Times New Roman',"Microsoft YaHei", "微软雅黑", 
              STXihei, "华文细黑", serif;
-$base-font-size:   12pt;
-$small-font-size:  $base-font-size * 0.875;
+$base-font-size:   16px;
+$code-font-size:   $base-font-size * 0.75  ; //16px*0.75  = 12px
+$small-font-size:  $base-font-size * 0.875 ; //16px*0.875 = 14px
 $base-line-height: 1.5;
 
-$mono-font-family: 'Source Code Pro', Menlo, Monaco, Inconsolata;
+$mono-font-family: "SFMono-Regular", Consolas, Menlo, Monaco, Inconsolata;
 
 $text-color:       hsl(0, 0%, 10%);
-//$text-color:       hsl(0, 0%, 25%);
 
-// Red
-// $alt-color:        hsl(0, 70%, 46%);
-// $article-bg-color: hsl(35, 36%, 95%);
-
-// Blue 1
-// $alt-color:        rgb(0,86,133);
-// $article-bg-color: rgb(184,208,222);
-
-// Blue 2
-// $alt-color:        rgb(0,62,95);
-// $article-bg-color: rgb(207,204,193);
-
-// Blue 3 
-// $alt-color:        rgb(12,54,99);
-// $article-bg-color: rgb(173,207,214);
-
-// Blue 4 
-// $alt-color:        rgb(34,112,148);
-// $article-bg-color: rgb(210,220,221);
-
-// Blue 5 
-// $alt-color:        rgb(2,93,140);
-// $article-bg-color: rgb(210,220,221);
-
-// Blue 6
-$alt-color:        rgb(2,93,140);
-$article-bg-color: rgb(212,223,222);
+$alt-color: #c72323; //Red I like
+$alt-color: #025d8c; //Blue I like
 
 $alt-color-darker: darken($alt-color, 6%);
-
+$article-bg-color: darken(white,1%);
+$code-bg-color:    darken($article-bg-color, 3%);
 $background-color: darken($article-bg-color, 6%);
 $bg-color-darker:  darken($article-bg-color, 15%);
 $alt-text-color:   darken($article-bg-color, 60%);
@@ -52,10 +28,8 @@ $alt-text-color:   darken($article-bg-color, 60%);
 $subdued-border:   rgba($bg-color-darker, 0.5);
 
 // for marker 
-
-// $marker-bg-color   : #E9FBE9;
-// $marker-text-color : black;
-$marker-bg-color   : rgb(173,207,214);
+$marker-bg-color   : #F8EEC7 ;      // a better yellow 
+//$marker-bg-color   : #DEEAF4 ;      // a better blue
 $marker-text-color : $text-color;
 
 // Import partials from `sass_dir` (defaults to `_sass`)
