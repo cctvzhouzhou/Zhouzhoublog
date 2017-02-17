@@ -55,7 +55,25 @@ body {
   }
 
   h3 {
-    font-size: 1.2em;
+    font-size: 1.3em;
+    font-variant: small-caps;
+    text-transform: lowercase;
+    font-weight: bold;
+    letter-spacing: 0.15em;
+    color: $alt-color;
+  }
+
+  h4 {
+	font-size: 1.2em;
+    font-variant: small-caps;
+    text-transform: lowercase;
+    font-weight: bold;
+    letter-spacing: 0.15em;
+    color: $alt-color;
+  }
+
+  h5 {
+	font-size: 1.1em;
     font-variant: small-caps;
     text-transform: lowercase;
     font-weight: bold;
