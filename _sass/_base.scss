@@ -129,6 +129,8 @@ article {
   pre {
     padding: 1em;
     border-radius: 5px;
+	overflow: auto;
+    overflow-x: auto;
   }
 
   code {
@@ -139,6 +141,12 @@ article {
   mark {
       background-color: $marker-bg-color ;
       color: $marker-text-color;
+  }
+  img {
+      max-width: 100%;
+      margin: 0px auto;
+      border-radius: 3px;
+      text-align: center;
   }
 }
 

@@ -63,6 +63,18 @@ Note: github don't support `==hightlight==` markdown. we need to use a html 5 `<
 * <mark>彼采萧兮，一日不见，如三秋兮。</mark>
 * 彼采艾兮，一日不见，如三岁兮。
 
+## Test for picture
+
+1. open `Keynote` or `Pages` (instructions same after this point)
+2. Select a template. The background does not matter but white shows your work better
+3. Drag or paste in your screenshot. Note: Using control+⌘+shift+4 you can send your screenshot directly to the clipboard.
+4. Apply a drop shadow to your image
+5. Select and copy just the image and paste it into your email or desired location.
+
+![My helpful screenshot]({{ site.baseurl }}/assets/images/screenshot.png)
+
+[ Stackexchange Question : Screenshot of selected area with shadow]:http://apple.stackexchange.com/a/199248
+
 ## Test syntax highlighting
 
 ### go
