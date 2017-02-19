@@ -73,7 +73,26 @@ Note: github don't support `==hightlight==` markdown. we need to use a html 5 `<
 
 ![My helpful screenshot]({{ site.baseurl }}/assets/images/screenshot.png)
 
-[ Stackexchange Question : Screenshot of selected area with shadow]:http://apple.stackexchange.com/a/199248
+[ Stackexchange Question : Screenshot of selected area with shadow](http://apple.stackexchange.com/a/199248)
+
+### Add Shadow by using script 
+
+```bash
+#!/bin/bash
+
+convert "$1" -trim \( +clone -background grey25 -shadow 80x40+5+30 \) +swap -background transparent -layers merge +repage "$1-shadow.png"
+```
+The best thing is transparent drop shadow around the window without the white border.
+
+The script from https://github.com/StefanScherer/dotfiles/blob/master/bin/add-shadow
+
+You might need to `brew install imagemagick` before using it.
+
+![Before add shadow]({{ site.baseurl }}/assets/images/add-shadow-before.png)
+
+
+![After add shadow]({{ site.baseurl }}/assets/images/add-shadow-after.png)
+
 
 ## Test syntax highlighting
 
