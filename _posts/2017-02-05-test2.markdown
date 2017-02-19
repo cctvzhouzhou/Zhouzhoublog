@@ -93,6 +93,15 @@ You might need to `brew install imagemagick` before using it.
 
 ![After add shadow]({{ site.baseurl }}/assets/images/add-shadow-after.png)
 
+### Create favicon.ico
+
+```
+convert favicon.png -define icon:auto-resize=64,48,32,16 favicon.ico
+
+```
+
+https://gist.github.com/pfig/1808188#gistcomment-1667360
+
 
 ## Test syntax highlighting
 
