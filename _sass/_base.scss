@@ -83,16 +83,17 @@ body {
 }
 
 article {
-  ul li {
-    padding-left: 0em;
-    margin-bottom: 0;
-    list-style: none;
-  }
 
   ul {
     position: relative;
     padding: 0;
-    margin-left: 0;
+    margin-left: 2.5em;
+  }
+
+  ul li {
+    padding-left: 0em;
+    margin-bottom: 0;
+    list-style: none;
   }
 
   ul > li:before {
@@ -100,6 +101,25 @@ article {
     content: "▪";
     color: $alt-color;
     left: -1.15em;
+  }
+
+  ol {
+    position: relative;
+    padding: 0;
+    margin-left: 2em;
+    counter-reset: item
+  }
+  ol > li {
+    list-style: none;
+  }
+  ol > li:before {
+    position: absolute;
+    content: counter(item) ".";
+    counter-increment: item;
+    font-style: oblique;
+    color: $alt-color;
+    left: -1.50em;
+    font-weight: bold;
   }
 
   pre, code {
@@ -209,6 +229,10 @@ footer {
 
   a, a:hover {
     color: $alt-color-darker;
+  }
+
+  .who-am-i {
+	font-size: 2em;
   }
 }
 
