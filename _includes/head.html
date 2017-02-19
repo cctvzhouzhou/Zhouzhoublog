@@ -11,11 +11,13 @@
   {% capture keywords %}{% if page.keywords %}{{ page.keywords }}{% elsif page.title %}{{""}}{% else %}{{ site.keywords }}{% endif %}{% endcapture %}
   <meta name="keywords" content="{{ keywords | strip_html | condense_spaces }}" />
 
+  <link href="{{ "/assets/images/favicon.png" | prepend: site.baseurl }}" rel="icon" type="image/png" >
+  <link href="{{ "/assets/images/favicon.png" | prepend: site.baseurl }}" rel="shortcut icon" type="image/png">
+
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
   <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}" />
   <span itemprop='author'><meta name="author" content="{{ site.author }}"><span itemprop='author'></span>
 
-  <link href="{{"/assets/images/favicon.png"|| prepend: site.baseurl }}" rel="icon" type="image/png" >
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
   <link rel="stylesheet" href="{{ "/css/font-awesome/css/font-awesome.css" | prepend: site.baseurl }}">
   <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
