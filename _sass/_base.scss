@@ -9,7 +9,6 @@ body {
   font-feature-settings: "kern", "liga", "dlig", "salt";
   text-rendering: optimizeLegibility;
 
-
   background-color: $background-color;
   font-family: $base-font-family;
   font-size: $base-font-size;
@@ -264,15 +263,13 @@ sup > .footnote {
 }
 
 table {
-  margin: 0 auto;
-  margin-top: 1.25em;
-  margin-bottom: 1.25em;
-  border-spacing: 2em 0.1em;
-  padding-top: 0.5em;
-  padding-bottom: 0.5em;
+  margin: 1em auto;
+  border-spacing: 0.5em 0.2em;
+  padding: 0.5em;
   border-collapse: separate;
   border-left: 2.5pt solid $alt-color;
   background-color: $code-bg-color;
+  overflow-x: auto;
 
   thead {
     color:$alt-color;
