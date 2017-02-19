@@ -13,6 +13,7 @@
         <h2>where am i</h2>
           {% if site.email %}
           <div>
+            <i class="fa fa-envelope"> </i>
             <a href="mailto:{{ site.email }}">
               <span class="username">{{ site.email }}</span>
             </a>
@@ -20,6 +21,7 @@
           {% endif %}
           {% if site.github_username %}
           <div>
+            <i class="fa fa-github"></i>
             <a href="https://github.com/{{ site.github_username }}">
               <span class="username">github//{{ site.github_username }}</span>
             </a>
@@ -27,6 +29,7 @@
           {% endif %}
           {% if site.twitter_username %}
           <div>
+            <i class="fa fa-twitter"></i>
             <a href="https://twitter.com/{{ site.twitter_username }}">
               <span class="username">twitter//{{ site.twitter_username }}</span>
             </a>
@@ -34,6 +37,7 @@
           {% endif %}
           {% if site.linkedin_username %}
           <div>
+            <i class="fa fa-linkedin"></i>
             <a href="https://id.linkedin.com/in/{{ site.linkedin_username }}">
               <span class="username">linkedin//{{ site.linkedin_username }}</span>
             </a>
