@@ -11,53 +11,27 @@
       </div>
       <div class="col-sm-4">
         <h2>where am i</h2>
+        <div class="who-am-i">
           {% if site.email %}
-          <div>
-            <i class="fa fa-envelope"></i>
-            <a href="mailto:{{ site.email }}">
-              <span class="username">{{ site.email }}</span>
-            </a>
-          </div>
+            <a href="mailto:{{ site.email }}"><i class="fa fa-envelope"></i></a>
           {% endif %}
           {% if site.github_username %}
-          <div>
-            <i class="fa fa-github"></i>
-            <a href="https://github.com/{{ site.github_username }}">
-              <span class="username">github//{{ site.github_username }}</span>
-            </a>
-          </div>
+            <a href="https://github.com/{{ site.github_username }}"><i class="fa fa-github"></i></a>
           {% endif %}
           {% if site.twitter_username %}
-          <div>
-            <i class="fa fa-twitter"></i>
-            <a href="https://twitter.com/{{ site.twitter_username }}">
-              <span class="username">twitter//{{ site.twitter_username }}</span>
-            </a>
-          </div>
+            <a href="https://twitter.com/{{ site.twitter_username }}"><i class="fa fa-twitter"></i></a>
           {% endif %}
           {% if site.linkedin_username %}
-          <div>
-            <i class="fa fa-linkedin"></i>
-            <a href="https://id.linkedin.com/in/{{ site.linkedin_username }}">
-              <span class="username">linkedin//{{ site.linkedin_username }}</span>
-            </a>
-          </div>
+            <a href="https://id.linkedin.com/in/{{ site.linkedin_username }}"><i class="fa fa-linkedin"></i></a>
           {% endif %}
           {% if site.facebook_username %}
-          <div>
-            <a href="https://www.facebook.com/{{ site.facebook_username }}">
-              <span class="username">facebook//{{ site.facebook_username }}</span>
-            </a>
-          </div>
+            <a href="https://www.facebook.com/{{ site.facebook_username }}"><i class="fa fa-facebook"></i></a>
           {% endif %}
           {% if site.weixin_username %}
-          <div>
-            <i class="fa fa-weixin" aria-hidden="true"></i>
-            <a href="weixin://{{ site.weixin_username }}">
-              <span class="username">weixin//{{site.weixin_username}}</span>
+            <a href="weixin://dl/add/{{site.weixin_username}}"><i class="fa fa-weixin"></i>
             </a>
-          </div>
           {% endif %}
+        </div>
       </div>
     </div>
     {% if site.colophon %}
