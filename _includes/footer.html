@@ -13,7 +13,7 @@
         <h2>where am i</h2>
           {% if site.email %}
           <div>
-            <i class="fa fa-envelope"> </i>
+            <i class="fa fa-envelope"></i>
             <a href="mailto:{{ site.email }}">
               <span class="username">{{ site.email }}</span>
             </a>
@@ -47,6 +47,14 @@
           <div>
             <a href="https://www.facebook.com/{{ site.facebook_username }}">
               <span class="username">facebook//{{ site.facebook_username }}</span>
+            </a>
+          </div>
+          {% endif %}
+          {% if site.weixin_username %}
+          <div>
+            <i class="fa fa-weixin" aria-hidden="true"></i>
+            <a href="weixin://{{ site.weixin_username }}">
+              <span class="username">weixin//{{site.weixin_username}}</span>
             </a>
           </div>
           {% endif %}

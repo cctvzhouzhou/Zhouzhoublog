@@ -9,6 +9,7 @@ baseurl: "/dindinw.io" # the subpath of your site, e.g. /blog
 url: "https://dindinw.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: yidingwu 
 github_username: dindinw
+weixin_username: dindinw
 
 # Build settings
 # markdown: kramdown
