@@ -84,7 +84,7 @@ convert "$1" -trim \( +clone -background grey25 -shadow 80x40+5+30 \) +swap -bac
 ```
 The best thing is transparent drop shadow around the window without the white border.
 
-The script from https://github.com/StefanScherer/dotfiles/blob/master/bin/add-shadow
+The script from [here](https://github.com/StefanScherer/dotfiles/blob/master/bin/add-shadow)
 
 You might need to `brew install imagemagick` before using it.
 
@@ -102,8 +102,7 @@ convert favicon.png -define icon:auto-resize=64,48,32,16 favicon.ico
 
 ```
 
-https://gist.github.com/pfig/1808188#gistcomment-1667360
-
+The code form [here](https://gist.github.com/pfig/1808188#gistcomment-1667360)
 
 ## Test syntax highlighting
 
