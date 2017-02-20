@@ -1,7 +1,7 @@
 body {
  /* don't use anti-alised don't know reason why is better to disable it */
  // -webkit-text-size-adjust: 100%;
- // -webkit-font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased;
   -moz-font-feature-settings: "kern", "liga=1, dlig=1", "salt";
   -ms-font-feature-settings: "kern", "liga", "dlig", "salt";
   -webkit-font-feature-settings: "kern", "liga", "dlig", "salt";
@@ -13,6 +13,7 @@ body {
   font-family: $base-font-family;
   font-size: $base-font-size;
   color: $text-color;
+  overflow-x: hidden;
 
   a, a:hover {
     color: $alt-color;
@@ -147,6 +148,12 @@ article {
       border-radius: 3px;
       text-align: center;
   }
+  img + em { // a trick to show img caption
+     display:block;
+     text-align: center;
+     color: lighten($text-color,50%);
+     font-size: 0.75em
+  }
 }
 
 blockquote {
@@ -179,6 +186,7 @@ blockquote {
   border-radius: 4px;
   border-top: 3px solid $alt-color;
 }
+
 
 .small-ornament, .big-ornament {
   > svg {

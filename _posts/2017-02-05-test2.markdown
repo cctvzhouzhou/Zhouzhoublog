@@ -89,9 +89,11 @@ The script from https://github.com/StefanScherer/dotfiles/blob/master/bin/add-sh
 You might need to `brew install imagemagick` before using it.
 
 ![Before add shadow]({{ site.baseurl }}/assets/images/add-shadow-before.png)
+*fig.1 - Before adding the shadow*
 
 
 ![After add shadow]({{ site.baseurl }}/assets/images/add-shadow-after.png)
+*fig.2 - 阴影效果添加之后*
 
 ### Create favicon.ico
 
