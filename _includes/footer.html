@@ -13,13 +13,13 @@
         <h2>where am i</h2>
         <div class="who-am-i">
           {% if site.email %}
-            <a href="mailto:{{ site.email }}"><i class="fa fa-envelope"></i></a>
+            <a style="color:#ea4335" href="mailto:{{ site.email }}" ><i class="fa fa-envelope"></i></a>
           {% endif %}
           {% if site.github_username %}
-            <a href="https://github.com/{{ site.github_username }}"><i class="fa fa-github"></i></a>
+            <a style="color:#333" href="https://github.com/{{ site.github_username }}"><i class="fa fa-github"></i></a>
           {% endif %}
           {% if site.twitter_username %}
-            <a href="https://twitter.com/{{ site.twitter_username }}"><i class="fa fa-twitter"></i></a>
+            <a style="color:#1da1f2" href="https://twitter.com/{{ site.twitter_username }}"><i class="fa fa-twitter"></i></a>
           {% endif %}
           {% if site.linkedin_username %}
             <a href="https://id.linkedin.com/in/{{ site.linkedin_username }}"><i class="fa fa-linkedin"></i></a>
@@ -28,8 +28,15 @@
             <a href="https://www.facebook.com/{{ site.facebook_username }}"><i class="fa fa-facebook"></i></a>
           {% endif %}
           {% if site.weixin_username %}
-            <a href="weixin://dl/add/{{site.weixin_username}}"><i class="fa fa-weixin"></i>
+          <a onmouseover="mousemethod('block','img1')" onmouseout="mousemethod('none','img1')"  style="color:#7bb32e">
+              <i class="fa fa-weixin"></i>
             </a>
+            <img src="{{site.baseurl}}/assets/images/wechat.jpg" width="43" style="position:absolute; top:68px; left:108px; display:none;" id="img1">
+            <script>
+              function mousemethod(op,imgid){
+                document.getElementById(imgid).style.display=op;
+              }
+            </script>
           {% endif %}
         </div>
       </div>
