@@ -10,32 +10,33 @@ tag: blockchain
 
 ---
 
-> Read those blogs first to know the background
->
-
-> From cpp-ethereum developer and Golem team member Paweł Bylica (https://github.com/chfast) 
-
-[How to Find $10M Just by Reading the Blockchain](https://blog.golemproject.net/how-to-find-10m-by-just-reading-blockchain-6ae9d39fcd95)
-
-> From Peter Vessenes (http://vessenes.com/about/)
-
-[The ERC20 Short Address Attack Explained](http://vessenes.com/the-erc20-short-address-attack-explained/)
+> The entire Ethereum token economy and startup ecosystem might be set back by years. -- Paweł Bylica 
 
 
-## Reference:
+## Background  
+
+Read those blogs first to know the background
+
+From cpp-ethereum developer and Golem team member Paweł Bylica (https://github.com/chfast) 
+
+* [How to Find $10M Just by Reading the Blockchain](https://blog.golemproject.net/how-to-find-10m-by-just-reading-blockchain-6ae9d39fcd95)
+
+From Peter Vessenes (http://vessenes.com/about/)
+
+* [The ERC20 Short Address Attack Explained](http://vessenes.com/the-erc20-short-address-attack-explained/)
 
 ### ERCs
 
-https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI
-https://github.com/ethereum/EIPs/issues/20   (ERC 20)
-https://github.com/ethereum/EIPs/issues/179  (ERC Simpler Token standard)
-https://github.com/ethereum/EIPs/issues/223  (ERC 23)
+* [Ethereum ABI](https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI)
+* [ERC 20](https://github.com/ethereum/EIPs/issues/20)
+* [ERC 179 Simpler Token standard](https://github.com/ethereum/EIPs/issues/179)
+* [ERC 23](https://github.com/ethereum/EIPs/issues/223)
 
 ### Token Impls:
 
-https://github.com/OpenZeppelin/zeppelin-solidity/blob/master/contracts/token/StandardToken.sol
-https://github.com/ConsenSys/Tokens/blob/master/Token_Contracts/contracts/StandardToken.sol
-https://github.com/Dexaran/ERC23-tokens/blob/master/ERC23_token.sol
+* [OpenZepplin](https://github.com/OpenZeppelin/zeppelin-solidity/blob/master/contracts/token/StandardToken.sol)
+* [ConsenSys](https://github.com/ConsenSys/Tokens/blob/master/Token_Contracts/contracts/StandardToken.sol)
+* [ERC23 RI](https://github.com/Dexaran/ERC23-tokens/blob/master/ERC23_token.sol)
 
 
 
@@ -194,12 +195,10 @@ The Golem's contract ABI for the `transfer` method, from [the golem's contract a
 
 #### a fix example by by redditor izqui9 
 
-
-https://www.reddit.com/r/ethereum/comments/63s917/worrysome_bug_exploit_with_erc20_token/dfwmhc3/
-
-https://kovan.etherscan.io/tx/0xe1be0e021f2e40af16ab64bc2268e55c50d152d06eeed433230f0693e0800ef2
-https://kovan.etherscan.io/tx/0xf323c15975e1fb47d9bd226401f259725319d737cdec343d254fdb6f9d5c84c0
-https://kovan.etherscan.io/address/0xbc6570f77ef0db0edef56013e2b2f5d822c883f4#code
+* https://www.reddit.com/r/ethereum/comments/63s917/worrysome_bug_exploit_with_erc20_token/dfwmhc3/
+* https://kovan.etherscan.io/tx/0xe1be0e021f2e40af16ab64bc2268e55c50d152d06eeed433230f0693e0800ef2
+* https://kovan.etherscan.io/tx/0xf323c15975e1fb47d9bd226401f259725319d737cdec343d254fdb6f9d5c84c0
+* https://kovan.etherscan.io/address/0xbc6570f77ef0db0edef56013e2b2f5d822c883f4#code
 
 ```javascript
 contract NonPayloadAttackableToken {
