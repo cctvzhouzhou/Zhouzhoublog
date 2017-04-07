@@ -37,8 +37,6 @@ https://github.com/OpenZeppelin/zeppelin-solidity/blob/master/contracts/token/St
 https://github.com/ConsenSys/Tokens/blob/master/Token_Contracts/contracts/StandardToken.sol
 https://github.com/Dexaran/ERC23-tokens/blob/master/ERC23_token.sol
 
-### TOOLS:
-http://www.statman.info/conversions/hexadecimal.php
 
 
 [1]:https://etherscan.io/address/0xa74476443119a942de498590fe1f2454d7d4ac0d                      (golem's contract addr)
