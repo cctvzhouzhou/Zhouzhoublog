@@ -54,7 +54,115 @@ http://www.statman.info/conversions/hexadecimal.php
 
 ## ERC 20 Attack Deep Dive 
 
-The 
+### The Bad transcation inpsection
+
+https://etherscan.io/tx/0x0213fb70e8174c5cbd9233a8e95905462cd7f1b498c12ff5e8ec071f4cc99347
+
+```
+Function: transfer(address _to, uint256 _value)
+
+0xa9059cbb0000000000000000000000000797350000000000000000000000000000000000000000000005150ac4c39a6f3f0000`
+```
+
+```
+0: 0xa0795bd02ad852e44b9626
+1: 0x
+2: 0x5150ac4c39a6f3f00000000000000000000000000000000000000
+3: 0x797350000000000000000000000000000000000
+4: 0x40d
+5: 0xa9059cbb
+```
+
+```json
+{
+    "action": {
+      "callType": "call",
+      "from": "0x0536806df512d6cdde913cf95c9886f65b1d3462",
+      "gas": "0x108fc",
+      "input": "0xa9059cbb0000000000000000000000000797350000000000000000000000000000000000000000000005150ac4c39a6f3f0000",
+      "to": "0xa74476443119a942de498590fe1f2454d7d4ac0d",
+      "value": "0x0"
+    },
+    "blockHash": "0xda2d6c1f1b8dee27976b90b7bbbc6a00c9f883382816a4db8895703d9ff4e9ee",
+    "blockNumber": 3375451,
+    "result": {
+      "gasUsed": "0x4d2",
+      "output": "0x0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "subtraces": 0,
+    "traceAddress": [],
+    "transactionHash": "0x0213fb70e8174c5cbd9233a8e95905462cd7f1b498c12ff5e8ec071f4cc99347",
+    "transactionPosition": 0,
+    "type": "call"
+  }
+]
+
+```
+
+```
+> web3.fromWei(web3.toBigNumber("0x5150ac4c39a6f3f00000000000000000000000000000000000000"),"ether")
+2.09069399123938660191650712182178886585904267264e+45
+```
+
+### A working example
+
+https://etherscan.io/tx/0xe9350ea88820f286416761b4fa2af3c2b340dcbba9b3cfafb3d1f9d5ba4162b7
+
+
+```
+Function: transfer(address _to, uint256 _value)
+
+MethodID: 0xa9059cbb
+[0]:000000000000000000000000ce192be11dde37630ef842e3af5fbd7bea15c6f9
+[1]:00000000000000000000000000000000000000000000032d26ada7a59b9f0000
+```
+
+```json
+ {
+    "action": {
+      "callType": "call",
+      "from": "0x0536806df512d6cdde913cf95c9886f65b1d3462",
+      "gas": "0x10478",
+      "input": "0xa9059cbb000000000000000000000000ce192be11dde37630ef842e3af5fbd7bea15c6f900000000000000000000000000000000000000000000032d26ada7a59b9f0000",
+      "to": "0xa74476443119a942de498590fe1f2454d7d4ac0d",
+      "value": "0x0"
+    },
+    "blockHash": "0xda2d6c1f1b8dee27976b90b7bbbc6a00c9f883382816a4db8895703d9ff4e9ee",
+    "blockNumber": 3375451,
+    "result": {
+      "gasUsed": "0x34d8",
+      "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
+    },
+    "subtraces": 0,
+    "traceAddress": [],
+    "transactionHash": "0xe9350ea88820f286416761b4fa2af3c2b340dcbba9b3cfafb3d1f9d5ba4162b7",
+    "transactionPosition": 9,
+    "type": "call"
+  }
+]
+```
+ 
+```
+0: 0xa0795bd02ad852e44b9626
+1: 0x
+2: 0x32d26ada7a59b9f0000
+3: 0xce192be11dde37630ef842e3af5fbd7bea15c6f9
+4: 0x40d
+5: 0xa9059cbb
+```
+
+```javascript
+> web3.fromWei(web3.toBigNumber("0x32d26ada7a59b9f0000"),"ether")
+14999.99
+```
+
+### Explain
+
+```javascript
+> web3.fromWei(web3.toBigNumber("0x5150ac4c39a6f3f0000"),"ether")
+> 23999.99
+>
+```
 
 
 #### the ABI for the `transfer` method
