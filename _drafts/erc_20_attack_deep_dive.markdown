@@ -34,6 +34,7 @@ From Peter Vessenes (http://vessenes.com/about/)
 
 ### Token Impls:
 
+* [First Blood](https://github.com/Firstbloodio/token/blob/master/smart_contract/FirstBloodToken.sol)
 * [OpenZepplin](https://github.com/OpenZeppelin/zeppelin-solidity/blob/master/contracts/token/StandardToken.sol)
 * [ConsenSys](https://github.com/ConsenSys/Tokens/blob/master/Token_Contracts/contracts/StandardToken.sol)
 * [ERC23 RI](https://github.com/Dexaran/ERC23-tokens/blob/master/ERC23_token.sol)
@@ -49,8 +50,7 @@ From Peter Vessenes (http://vessenes.com/about/)
 [7]:https://etherscan.io/token/GOLEM#balances                                                    (Current golem balances)
 [8]:https://etherscan.io/token/Golem?a=0x289df52c16058f597bb10bc4bcf2e780552ea2d3                (the golem's token big tx-es, 69,999.99 )
 [9]:https://etherscan.io/address/0x289df52c16058f597bb10bc4bcf2e780552ea2d3                      (the golem's holder address)
-[10]:https://github.com/golemfactory/golem-crowdfunding/blob/50bf8af3ac359401d46b4047df096020e19ba9dd/contracts/Token.sol#L81  (golem crowdfunding contract source code on github)
-
+[10]:https://github.com/golemfactory/golem-crowdfunding/blob/master/contracts/Token.sol#L81 (golem crowdfunding contract source code on github)
 [11]:https://www.reddit.com/r/ethereum/comments/63s917/worrysome_bug_exploit_with_erc20_token/dfwmhc3/
 [12]:https://kovan.etherscan.io/tx/0xe1be0e021f2e40af16ab64bc2268e55c50d152d06eeed433230f0693e0800ef2
 [13]:https://kovan.etherscan.io/tx/0xf323c15975e1fb47d9bd226401f259725319d737cdec343d254fdb6f9d5c84c0
@@ -227,6 +227,129 @@ The Golem's contract ABI for the `transfer` method, from [the golem's contract a
     }
 ```
 
+golem crowdfunding [contract source code][10] on github
+
+```javascript
+...
+   mapping (address => uint256) balances;
+...
+   event Transfer(address indexed _from, address indexed _to, uint256 _value);
+...
+
+   function transfer(address _to, uint256 _value) returns (bool) {
+        // Abort if not in Operational state.
+        if (funding) throw;
+
+        var senderBalance = balances[msg.sender];
+        if (senderBalance >= _value && _value > 0) {
+            senderBalance -= _value;
+            balances[msg.sender] = senderBalance;
+            balances[_to] += _value;
+            Transfer(msg.sender, _to, _value);
+            return true;
+        }
+        return false;
+    }
+```
+
+### Mock the attack
+
+the mockTransferContract.sol 
+
+```javascript
+pragma solidity ^0.4.0;
+contract PayloadAttackableToken {
+    
+    mapping (address => uint256) balances;
+    
+    event Transfer(address indexed _from, address indexed _to, uint256 _value);
+
+    function transfer(address _to, uint256 _value) returns (bool){
+        var senderBalance = balances[msg.sender];
+        if (senderBalance >= _value && _value > 0) {
+            senderBalance -= _value;
+            balances[msg.sender] = senderBalance;
+            balances[_to] += _value;
+            Transfer(msg.sender, _to, _value);
+            return true;
+        }
+        return false;
+    }
+}
+```
+Go to http://ethereum.github.io/browser-solidity
+
+byteCodde
+
+```
+6060604052341561000c57fe5b5b6102298061001c6000396000f30060606040526000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063a9059cbb1461003b575bfe5b341561004357fe5b610078600480803573ffffffffffffffffffffffffffffffffffffffff16906020019091908035906020019091905050610092565b604051808215151515815260200191505060405180910390f35b60006000600060003373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020016000205490508281101580156100e85750600083115b156101f157828103905080600060003373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020016000208190555082600060008673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020600082825401925050819055508373ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff167fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef856040518082815260200191505060405180910390a3600191506101f6565b600091505b50929150505600a165627a7a723058202abc12d5494fe89ba003dd3bfcd8260a331eda83c66a32760f482ef9972b49d20029
+```
+
+ABI:
+
+```json
+[   {
+        "constant": false,
+        "inputs": [
+            {
+                "name": "_to",
+                "type": "address"
+            },
+            {
+                "name": "_value",
+                "type": "uint256"
+            }
+        ],
+        "name": "transfer",
+        "outputs": [
+            {
+                "name": "",
+                "type": "bool"
+            }
+        ],
+        "payable": false,
+        "type": "function"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": true,
+                "name": "_from",
+                "type": "address"
+            },
+            {
+                "indexed": true,
+                "name": "_to",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "name": "_value",
+                "type": "uint256"
+            }
+        ],
+        "name": "Transfer",
+        "type": "event"
+    }]
+```
+
+Web3 Deploy
+
+```javascript
+var ballot_sol_payloadattackabletokenContract = web3.eth.contract([{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[{"name":"","type":"bool"}],"payable":false,"type":"function"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_from","type":"address"},{"indexed":true,"name":"_to","type":"address"},{"indexed":false,"name":"_value","type":"uint256"}],"name":"Transfer","type":"event"}]);
+var ballot_sol_payloadattackabletoken = ballot_sol_payloadattackabletokenContract.new(
+   {
+     from: web3.eth.accounts[0], 
+     data: '0x6060604052341561000c57fe5b5b6102298061001c6000396000f30060606040526000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063a9059cbb1461003b575bfe5b341561004357fe5b610078600480803573ffffffffffffffffffffffffffffffffffffffff16906020019091908035906020019091905050610092565b604051808215151515815260200191505060405180910390f35b60006000600060003373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020016000205490508281101580156100e85750600083115b156101f157828103905080600060003373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020016000208190555082600060008673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020600082825401925050819055508373ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff167fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef856040518082815260200191505060405180910390a3600191506101f6565b600091505b50929150505600a165627a7a723058202abc12d5494fe89ba003dd3bfcd8260a331eda83c66a32760f482ef9972b49d20029', 
+     gas: '4700000'
+   }, function (e, contract){
+    console.log(e, contract);
+    if (typeof contract.address !== 'undefined') {
+         console.log('Contract mined! address: ' + contract.address + ' transactionHash: ' + contract.transactionHash);
+    }
+ })
+```
 ### How ethereum call the contract
 
 https://github.com/ethereum/go-ethereum/blob/master/core/vm/contracts.go#L68
