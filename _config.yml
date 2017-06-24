@@ -5,7 +5,7 @@ email: wuyiding at google.com
 description: > # this means to ignore newlines until "baseurl:"
   The personal blog, most for computing tech.
 
-baseurl: "/dindinw.io" # the subpath of your site, e.g. /blog
+baseurl: "/blog" # the subpath of your site, e.g. /blog
 url: "https://dindinw.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: yidingwu 
 github_username: dindinw
