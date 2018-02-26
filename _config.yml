@@ -1,15 +1,15 @@
 # Site settings
-title: Alex Wu's Blog 
-author: Alex Wu
-email: wuyiding at google.com
+title: Zhou zhou's Blog 
+author: zhouzhou
+email: cctvzhouzhou@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
   The personal blog, most for computing tech.
 
 baseurl: "/blog" # the subpath of your site, e.g. /blog
-url: "https://dindinw.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://cctvzhouzhou.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: yidingwu 
-github_username: dindinw
-weixin_username: dindinw
+github_username: cctvzhouzhou
+weixin_username: zhouzhou09030201
 
 # Build settings
 markdown: kramdown
